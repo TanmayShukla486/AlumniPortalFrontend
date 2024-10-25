@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none; /* Internet Explorer and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.bio {
+  box-shadow: 1px 2px 4px;
+}
+
+.shadow-custom-inset {
+  box-shadow: inset 2px 2px 8px;
+}
+
+.shadow-custom {
+  box-shadow: 2px 2px 8px;
+}
+
+.shadow-custom-inset-colored {
+  box-shadow: inset 2px 2px 8px #b55e19;
+}
+
+.markdown-editor {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  overflow: hidden;
+  white-space: normal;
+}
+
+.blog-item {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.container {
+  /* Set a fixed width */
+  white-space: nowrap; /* Prevent wrapping to a new line */
+  overflow: hidden; /* Hide the overflow content */
+  text-overflow: ellipsis; /* Add "..." for overflowed text */
+}
