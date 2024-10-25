@@ -12,6 +12,23 @@ export interface Comment {
   likes: number
 }
 
+export interface CommentSendBody {
+  username: string
+  blogId: number
+  content: string
+}
+
+export interface CommentResponse {
+  status: number
+  message: string
+  data: Comment[]
+}
+export interface CommentPostResponse {
+  status: number
+  message: string
+  data: Comment
+}
+
 export interface CommentState {
   comments: Comment[]
   status: "LOADING" | "IDLE" | "ERROR"
@@ -27,7 +44,7 @@ export const commentSlice = createAppSlice({
   initialState,
   reducers: create => ({
     fetchComments: create.asyncThunk<
-      Comment[],
+      CommentResponse,
       { id: number; token: string; refreshToken: string }
     >(
       async ({ id, token, refreshToken }) => {
@@ -50,7 +67,7 @@ export const commentSlice = createAppSlice({
           state.status = "LOADING"
         },
         fulfilled: (state, action) => {
-          state.comments = action.payload
+          state.comments = action.payload.data
           state.status = "IDLE"
         },
         rejected: state => {
@@ -59,8 +76,8 @@ export const commentSlice = createAppSlice({
       },
     ),
     addComment: create.asyncThunk<
-      Comment,
-      { data: Comment; token: string; refreshToken: string }
+      CommentPostResponse,
+      { data: CommentSendBody; token: string; refreshToken: string }
     >(
       async ({ data, token, refreshToken }) => {
         const config: ConfigType = {
@@ -71,8 +88,9 @@ export const commentSlice = createAppSlice({
             Accept: "application/json",
           },
         }
-        const response = await axios.put(
+        const response = await axios.post(
           `http://localhost:8080/api/comment`,
+          JSON.stringify(data),
           config,
         )
         return response.data
@@ -83,7 +101,7 @@ export const commentSlice = createAppSlice({
         },
         fulfilled: (state, action) => {
           state.status = "IDLE"
-          state.comments.push(action.payload)
+          state.comments = [...state.comments, action.payload.data]
         },
         rejected: state => {
           state.status = "ERROR"
@@ -127,6 +145,6 @@ export const commentSlice = createAppSlice({
   },
 })
 
-export const { fetchComments } = commentSlice.actions
+export const { fetchComments, addComment } = commentSlice.actions
 export const { selectCommentList, selectCommentListStatus } =
   commentSlice.selectors

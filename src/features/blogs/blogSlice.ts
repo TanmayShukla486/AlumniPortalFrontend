@@ -20,8 +20,15 @@ export interface Blog {
   commentsEnabled: boolean
 }
 
+interface LikeResponse {
+  status: number
+  message: string
+  data: number
+}
+
 export interface BlogState {
   blog: Blog | null
+  likes: number
   status: "LOADING" | "IDLE" | "ERROR" | "POSTED"
 }
 
@@ -33,6 +40,7 @@ interface BlogPostResponse {
 
 const initialState: BlogState = {
   blog: null,
+  likes: 0,
   status: "IDLE",
 }
 
@@ -42,15 +50,21 @@ export interface BlogPostDetails {
   blog: Blog
 }
 
+interface Response {
+  status: number
+  message: string
+  data: Blog
+}
+
 export const blogSlice = createAppSlice({
   name: "currBlog",
   initialState,
   reducers: create => ({
-    getBlog: create.asyncThunk<Blog, number>(
-      async id => {
-        const token =
-          useAppSelector(selectToken) || localStorage.getItem("token") || ""
-        const refreshToken = useAppSelector(selectRefreshToken) || ""
+    getBlog: create.asyncThunk<
+      Response,
+      { id: number; token: string; refreshToken: string }
+    >(
+      async ({ id, token, refreshToken }) => {
         const config: ConfigType = {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -70,7 +84,8 @@ export const blogSlice = createAppSlice({
           state.status = "LOADING"
         },
         fulfilled: (state, action) => {
-          state.blog = action.payload
+          state.blog = action.payload.data
+          state.likes = action.payload.data.likes
           state.status = "IDLE"
         },
         rejected: state => {
@@ -108,6 +123,36 @@ export const blogSlice = createAppSlice({
         },
       },
     ),
+    likeBlog: create.asyncThunk<
+      LikeResponse,
+      { id: number; token: string; refreshToken: string }
+    >(
+      async ({ id, token, refreshToken }) => {
+        const config: ConfigType = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            RefreshToken: refreshToken,
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        }
+        const response = await axios.post(
+          "http://localhost:8080/api/likes",
+          JSON.stringify({
+            entity: "blog",
+            entityId: id,
+          }),
+          config,
+        )
+        return response.data
+      },
+      {
+        pending: () => {},
+        fulfilled: (state, action) => {
+          state.likes = action.payload.data
+        },
+      },
+    ),
     removeBlog: create.reducer(state => {
       state.status = "IDLE"
       state.blog = null
@@ -119,10 +164,12 @@ export const blogSlice = createAppSlice({
   selectors: {
     selectBlog: state => state.blog,
     selectBlogStatus: state => state.status,
+    selectBlogLikes: state => state.likes,
   },
 })
 
-export const { getBlog, postBlog, removeBlog, resetBlogStatus } =
+export const { getBlog, postBlog, removeBlog, resetBlogStatus, likeBlog } =
   blogSlice.actions
 
-export const { selectBlog, selectBlogStatus } = blogSlice.selectors
+export const { selectBlog, selectBlogStatus, selectBlogLikes } =
+  blogSlice.selectors

@@ -52,7 +52,7 @@ const ViewBlogs = () => {
           {blogListStatus === "IDLE" &&
             blogList.map(blog => (
               <div className="h-fit">
-                <BlogDisplayCompact blog={blog} />
+                <BlogDisplayCompact blog={blog} key={blog.id} />
               </div>
             ))}
         </div>
