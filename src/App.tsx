@@ -4,6 +4,7 @@ import Login from "./app/pages/login/Login"
 import Register from "./app/pages/register/Register"
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom"
 import ViewBlogs from "./app/pages/view-blog/ViewBlogs"
+import Blog from "./app/pages/blog/Blog"
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
   {
     path: "/feed",
     element: <ViewBlogs />,
+  },
+  {
+    path: "/feed/:id",
+    element: <Blog />,
   },
 ])
 

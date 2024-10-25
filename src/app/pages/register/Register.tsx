@@ -180,6 +180,7 @@ const Register = () => {
             <div className="text-2xl font-bold text-white">User Details</div>
             <div className="flex space-x-4 w-full">
               <CustomInput
+                disabled={false}
                 value={firstName}
                 setValue={setFirstName}
                 title="First Name"
@@ -187,6 +188,7 @@ const Register = () => {
                 classes=""
               />
               <CustomInput
+                disabled={false}
                 value={middleName}
                 setValue={setMiddleName}
                 title="Middle Name"
@@ -196,6 +198,7 @@ const Register = () => {
             </div>
             <div className="flex space-x-4 w-full">
               <CustomInput
+                disabled={false}
                 value={lastName}
                 setValue={setLastName}
                 title="Last Name"
@@ -235,6 +238,7 @@ const Register = () => {
               />
             </div>
             <CustomInput
+              disabled={false}
               value={username}
               setValue={setUsername}
               title="Username"
@@ -242,6 +246,7 @@ const Register = () => {
               classes=""
             />
             <CustomInput
+              disabled={false}
               value={email}
               setValue={setEmail}
               title="Email"
@@ -340,6 +345,7 @@ const Register = () => {
                   setValue={setCompanyName}
                   title="Company Title"
                   classesPassed
+                  disabled={false}
                   classes="text-white bg-gradient-to-r w-full bg-clip-content rounded-md from-bg-primary to-primary-dark"
                 />
               </div>

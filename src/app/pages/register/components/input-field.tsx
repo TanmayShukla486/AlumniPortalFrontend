@@ -7,6 +7,7 @@ export interface FieldValue {
   title: string
   classesPassed: boolean
   classes: string
+  disabled: boolean
 }
 
 const CustomInput = ({
@@ -15,6 +16,7 @@ const CustomInput = ({
   title,
   classesPassed,
   classes,
+  disabled = false,
 }: FieldValue) => {
   const color = classesPassed ? "white" : "black"
   const boxShadow = classesPassed ? "1px 2px 4px #b55e19" : "1px 2px 4px"
@@ -31,6 +33,7 @@ const CustomInput = ({
         placeholder={title}
         color={"primary"}
         value={value}
+        disabled={disabled}
         onChange={e => setValue(e.target.value)}
         sx={{
           "& .MuiInputBase-input": {

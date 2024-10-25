@@ -26,15 +26,17 @@ export const commentSlice = createAppSlice({
   name: "comments",
   initialState,
   reducers: create => ({
-    fetchComments: create.asyncThunk<Comment[], { id: number }>(
-      async id => {
-        const token =
-          useAppSelector(selectToken) || localStorage.getItem("token") || ""
-        const refreshToken = useAppSelector(selectRefreshToken) || ""
+    fetchComments: create.asyncThunk<
+      Comment[],
+      { id: number; token: string; refreshToken: string }
+    >(
+      async ({ id, token, refreshToken }) => {
         const config: ConfigType = {
           headers: {
             Authorization: `Bearer ${token}`,
             RefreshToken: refreshToken,
+            "Content-Type": "application/json",
+            Accept: "application/json",
           },
         }
         const response = await axios.get(
@@ -56,15 +58,17 @@ export const commentSlice = createAppSlice({
         },
       },
     ),
-    addComment: create.asyncThunk<Comment, { data: Comment }>(
-      async ({ data }) => {
-        const token =
-          useAppSelector(selectToken) || localStorage.getItem("token") || ""
-        const refreshToken = useAppSelector(selectRefreshToken) || ""
+    addComment: create.asyncThunk<
+      Comment,
+      { data: Comment; token: string; refreshToken: string }
+    >(
+      async ({ data, token, refreshToken }) => {
         const config: ConfigType = {
           headers: {
             Authorization: `Bearer ${token}`,
             RefreshToken: refreshToken,
+            "Content-Type": "application/json",
+            Accept: "application/json",
           },
         }
         const response = await axios.put(
@@ -87,15 +91,17 @@ export const commentSlice = createAppSlice({
       },
     ),
 
-    deleteComment: create.asyncThunk<number, { id: number }>(
-      async ({ id }) => {
-        const token =
-          useAppSelector(selectToken) || localStorage.getItem("token") || ""
-        const refreshToken = useAppSelector(selectRefreshToken) || ""
+    deleteComment: create.asyncThunk<
+      number,
+      { id: number; token: string; refreshToken: string }
+    >(
+      async ({ id, token, refreshToken }) => {
         const config: ConfigType = {
           headers: {
             Authorization: `Bearer ${token}`,
             RefreshToken: refreshToken,
+            "Content-Type": "application/json",
+            Accept: "application/json",
           },
         }
         await axios.delete(`http://localhost:8080/api/comment?id=${id}`, config)

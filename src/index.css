@@ -39,6 +39,14 @@
   word-wrap: break-word;
 }
 
+.comment {
+  box-shadow: 2px 2px 8px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  overflow: hidden;
+  white-space: normal;
+}
+
 .container {
   /* Set a fixed width */
   white-space: nowrap; /* Prevent wrapping to a new line */
