@@ -9,6 +9,12 @@ export interface Company {
   currentlyWorking: boolean
 }
 
+interface Response {
+  statusCode: number
+  message: string
+  data: UserProfile
+}
+
 export interface UserProfile {
   username: string
   email: string
@@ -55,12 +61,11 @@ export const profileSlice = createAppSlice({
   name: "profile",
   initialState,
   reducers: create => ({
-    fetchProfile: create.asyncThunk<UserProfile>(
-      async username => {
-        const token: string =
-          useAppSelector(selectToken) || localStorage.getItem("token") || ""
-        const refreshToken: string | null =
-          useAppSelector(selectRefreshToken) || ""
+    fetchProfile: create.asyncThunk<
+      Response,
+      { username: string; token: string; refreshToken: string }
+    >(
+      async ({ username, token, refreshToken }) => {
         const config: ConfigType = {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -81,7 +86,7 @@ export const profileSlice = createAppSlice({
         },
         fulfilled: (state, action) => {
           state.status = "IDLE"
-          state.profile = action.payload
+          state.profile = action.payload.data
         },
         rejected: state => {
           state.status = "ERROR"

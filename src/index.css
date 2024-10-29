@@ -15,6 +15,10 @@
   transition: color 0.3s ease-in-out;
 }
 
+.user-item:hover {
+  background-color: aquamarine;
+}
+
 .bio {
   box-shadow: 1px 2px 4px;
 }

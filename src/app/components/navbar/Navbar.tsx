@@ -45,7 +45,7 @@ const Navbar = () => {
           />
         ))}
       </div>
-      <div className="flex justify-center items-center hover:bg-bg-primary hover:text-white h-14 w-14 mt-2  rounded-full transition-colors duration-300 cursor-pointer">
+      <div className="flex justify-center items-center hover:bg-bg-dark bg-transparent hover:text-white h-14 w-14 mt-2  rounded-full transition-colors duration-500 cursor-pointer">
         <SvgIcon
           component={LogoutIcon}
           fontSize="large"

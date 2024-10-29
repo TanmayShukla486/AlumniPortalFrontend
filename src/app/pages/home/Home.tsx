@@ -6,11 +6,11 @@ import GeneralDesc from "./components/GeneralDesc"
 const Home = () => {
   return (
     <Wrapper>
-      <div className="flex min-h-[80vh] mt-6 w-full">
-        <div className="flex-auto">
+      <div className="grid grid-cols-6 h-full mt-6 w-full">
+        <div className="col-span-4 mr-12">
           <GeneralDesc />
         </div>{" "}
-        <div className="flex-1 pl-60 pr-16">
+        <div className="col-span-2 mr-8">
           <EventBox />
         </div>
       </div>

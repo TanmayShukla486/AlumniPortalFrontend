@@ -21,6 +21,7 @@ export interface UserCredentials {
   token: string | null
   refreshToken: string | null
   role: "STUDENT" | "ALUMNI" | "ADMIN"
+  profilePic: string | null
 }
 
 export interface UserState {
@@ -82,6 +83,7 @@ export const userSlice = createAppSlice({
     selectRefreshToken: user => user.credentials?.refreshToken,
     selectRole: user => user.credentials?.role,
     selectUsername: user => user.credentials?.username,
+    selectProfilePic: user => user.credentials?.profilePic,
   },
 })
 
@@ -93,4 +95,5 @@ export const {
   selectStatus,
   selectToken,
   selectUsername,
+  selectProfilePic,
 } = userSlice.selectors

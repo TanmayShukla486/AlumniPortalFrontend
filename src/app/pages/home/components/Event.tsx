@@ -55,19 +55,20 @@ const events: NewsEvent[] = [
 const EventBox = () => {
   return (
     <Card
-      className="h-[calc(100%-10rem)]  w-full border-4 border-primary-dark px-4 py-2"
+      className="h-3/4 px-4 pb-8 pt-4"
       sx={{
         borderRadius: "16px",
+        backgroundColor: "#232d3f",
       }}
     >
       <div className="font-bold bg-transparent text-3xl">
-        <span className="bg-gradient-to-r from-primary-dark to-bg-primary bg-clip-text text-transparent">
+        <span className="bg-gradient-to-br from-white to-content-light bg-clip-text text-transparent">
           Events
         </span>
       </div>
       <div className="h-full overflow-y-scroll my-2 hide-scrollbar ">
-        {events.map(event => (
-          <EventItem title={event.title} />
+        {events.map((event, index) => (
+          <EventItem title={event.title} key={index} />
         ))}
       </div>
     </Card>

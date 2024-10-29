@@ -9,8 +9,13 @@ import HomeIcon from "@mui/icons-material/Home"
 import CreateIcon from "@mui/icons-material/Create"
 import { useAppSelector } from "../../redux/hooks"
 import { selectRole } from "../../../features/user/userSlice"
-import { Divider } from "@mui/material"
+import { Divider, Skeleton } from "@mui/material"
+import AccountCircleIcon from "@mui/icons-material/AccountCircle"
 import UserItem from "../reusable/user-item"
+import {
+  selectFollowingList,
+  selectFollowingListStatus,
+} from "../../../features/following/followingSlice"
 
 const sidebarItems: ButtonItemProps[] = [
   {
@@ -21,7 +26,7 @@ const sidebarItems: ButtonItemProps[] = [
   {
     title: "Alumni",
     Icon: GroupIcon,
-    href: "/feed/favorite",
+    href: "/alumni",
   },
   {
     title: "Popular",
@@ -48,8 +53,11 @@ const Sidebar = () => {
   //     Icon: CreateIcon,
   //     href: "/",
   //   })
+  const followingList = useAppSelector(selectFollowingList)
+  const listStatus = useAppSelector(selectFollowingListStatus)
+  const role = useAppSelector(selectRole)
   return (
-    <div className="w-64 h-full fixed bg-gradient-to-r from-bg-light to-bg-dark border-r-2 border-white flex flex-col items-center space-y-2 pl-4 pr-8 justify-start py-2 text-white">
+    <div className="w-60 h-full fixed bg-gradient-to-r from-bg-light to-bg-dark border-r-2 border-white flex flex-col items-center space-y-2 pl-4 pr-8 justify-start py-2 text-white transition-all duration-300 ease-in-out">
       <SidebarUser />
       {sidebarItems.map(item => (
         <SidebarItem
@@ -59,7 +67,13 @@ const Sidebar = () => {
           key={item.title}
         />
       ))}
-      <SidebarItem Icon={CreateIcon} href="/create-blog" title="Create Blog" />
+      {role === "ALUMNI" && (
+        <SidebarItem
+          Icon={CreateIcon}
+          href="/create-blog"
+          title="Create Blog"
+        />
+      )}
       <Divider
         className="w-full pt-5 mt-6"
         variant="middle"
@@ -69,14 +83,24 @@ const Sidebar = () => {
       />
       <div className="w-full pl-4">Following</div>
       <div className="flex flex-col overflow-scroll hide-scrollbar w-full h-auto pb-4">
-        {sidebarItems.map(item => (
-          <UserItem
-            Icon={item.Icon}
-            href={item.href}
-            username={item.title}
-            key={item.title}
-          />
-        ))}
+        {listStatus === "IDLE" &&
+          followingList.length > 0 &&
+          followingList.map(item => (
+            <UserItem
+              Icon={AccountCircleIcon}
+              href={`/user/${item.followed}`}
+              username={item.followed}
+              key={item.followed}
+            />
+          ))}
+        {(listStatus === "LOADING" || listStatus === "ERROR") && (
+          <Skeleton className="flex justify-start rounded-xl items-center space-x-2 color-transition px-2 py-4" />
+        )}
+        {listStatus === "IDLE" && followingList.length === 0 && (
+          <div className="w-full pl-4 pr-8 opacity-50 text-sm">
+            You're not following anyone
+          </div>
+        )}
       </div>
     </div>
   )
