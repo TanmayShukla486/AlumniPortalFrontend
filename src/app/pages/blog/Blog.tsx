@@ -32,11 +32,11 @@ const Blog = () => {
   }, [])
   return (
     <Wrapper>
-      <div className="grid grid-cols-3 gap-2 h-[calc(100%-4rem)] mr-8 mt-4">
-        <div className="col-span-2 min-h-full">
+      <div className="flex items-center justify-end h-[calc(100%-4rem)] px-4 mt-4">
+        <div className="flex-auto overflow-scroll hide-scrollbar">
           <BlogBody />
         </div>
-        <div className="col-span-1 h-full max-h-full w-full overflow-x-auto overflow-y-scroll hide-scrollbar">
+        <div className="flex-1 h-full max-h-full w-full overflow-x-clip overflow-y-scroll hide-scrollbar">
           <CommentBox blogId={parseInt(id)} />
         </div>
       </div>

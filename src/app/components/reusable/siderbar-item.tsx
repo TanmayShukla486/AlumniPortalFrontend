@@ -11,27 +11,15 @@ export interface ButtonItemProps {
 
 const SidebarItem = ({ Icon, title, href }: ButtonItemProps) => {
   return (
-    <Card
-      className="w-full bg-bg-primary opacity-100 hover:text-white hover:bg-primary-dark h-14 text-wrap text-center text-amber-950 cursor-pointer"
-      raised={true}
-      sx={{
-        borderRadius: "18px",
-        border: "#b55e19 solid 2px",
-        padding: "4px",
-        transition: "background-color 0.3s ease, border-color 0.3s ease",
-        ":hover": {
-          border: "2px white solid",
-          zIndex: "30px",
-        },
-      }}
-    >
-      <Link to={href}>
-        <div className="ml-2 space-x-4 flex justify-start items-center h-full">
-          <SvgIcon component={Icon} />
-          <span>{title}</span>
-        </div>
+    <div className="w-full h-10">
+      <Link
+        to={href}
+        className="flex justify-start rounded-xl items-center space-x-2 color-transition hover:bg-gradient-to-br from-content-light to-content-dark hover:border-2 hover:border-white px-2 py-4"
+      >
+        <SvgIcon component={Icon} />
+        <div>{title}</div>
       </Link>
-    </Card>
+    </div>
   )
 }
 

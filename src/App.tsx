@@ -35,11 +35,23 @@ const router = createBrowserRouter([
     path: "/feed/:id",
     element: <Blog />,
   },
+  {
+    path: "/user/:username",
+    element: <div>Hello World</div>,
+  },
+  {
+    path: "/events",
+    element: <div>Events</div>,
+  },
+  {
+    path: "/events",
+    element: "Alumni",
+  },
 ])
 
 const App = () => {
   return (
-    <div className="w-fill h-screen bg-gradient-to-b bg-cover from-bg-grad-start to-bg-grad-end flex justify-center items-center overflow-hidden ">
+    <div className="w-fill h-screen bg-gradient-to-br bg-cover from-content-light to-bg-dark flex justify-center items-center overflow-hidden ">
       <RouterProvider router={router} />
     </div>
   )

@@ -11,7 +11,7 @@ import {
   UserCredentials,
 } from "../../../features/user/userSlice"
 import LoadingModal from "../../components/reusable/loading-modal"
-import { Link } from "react-router-dom"
+import { Link, Navigate } from "react-router-dom"
 
 export interface LoginDetails {
   username: string
@@ -23,7 +23,6 @@ const Login = () => {
   const [password, setPassword] = useState<string>("")
   const [isHidden, setIsHidden] = useState<boolean>(true)
   const dispatch = useAppDispatch()
-  const ref = useRef<HTMLAnchorElement>(null)
   const status = useAppSelector(selectStatus)
 
   const handleLogin = () => {
@@ -38,14 +37,10 @@ const Login = () => {
     dispatch(login(data))
   }
 
-  useEffect(() => {
-    if (status === "LOGGEDIN") ref.current?.click()
-  }, [status])
-
   return (
     <div className="h-full w-full flex items-center justify-center">
-      <Link to="/create-blog" className="hidden" ref={ref} />
       <LoadingModal openExp={status === "LOADING"} />
+      {status === "LOGGEDIN" && <Navigate to={"/home"} />}
       <div className="lg:w-1/3 md:w-1/2">
         <Card
           className="w-full"
@@ -64,6 +59,7 @@ const Login = () => {
                 title="Username"
                 classesPassed={false}
                 classes=""
+                disabled={false}
               />
               <div className="w-full flex-row flex items-center justify-end">
                 <TextField

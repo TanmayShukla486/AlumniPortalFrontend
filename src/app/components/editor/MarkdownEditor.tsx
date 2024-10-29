@@ -100,7 +100,7 @@ const MarkdownEditor = () => {
         </div>
       </Modal>
       <Card
-        className="max-w-[calc(100%-2rem)] h-[calc(100vh-9rem)] p-8 mt-8 overflow-hidden"
+        className="w-[calc(100%-2rem)] h-[calc(100vh-9rem)] p-8 mt-8 overflow-hidden"
         sx={{
           borderRadius: "25px",
         }}
@@ -117,6 +117,7 @@ const MarkdownEditor = () => {
               setValue={setTitle}
               classesPassed={false}
               classes=""
+              disabled={false}
             />
           </div>
           <div className="bg-gradient-to-r w-full bg-clip-content rounded-md from-bg-grad-start to-bg-grad-end shadow-custom">
@@ -150,7 +151,7 @@ const MarkdownEditor = () => {
               }}
             />
           </div>
-          <div className="flex justify-between space-x-4 pr-2">
+          <div className="flex justify-between w-full pr-2">
             <div className="bg-clip-content flex flex-col items-start">
               <CustomButton
                 customBgColor="#b55e19"

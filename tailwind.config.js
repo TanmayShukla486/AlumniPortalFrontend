@@ -4,13 +4,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        "bg-grad-start": "#fefae0",
-        "bg-grad-end": "#faedcd",
-        "bg-primary": "#d4a373",
-        "primary-dark": "#b55e19",
-        "shadow-primary": "#ccd5ae",
-        "shadow-secondary": "#e9edc9",
-        "gradient-alt": "#ffb173",
+        "bg-dark": "#0F0F0F",
+        "bg-light": "#232D3F",
+        "content-dark": "#232D3F",
+        "content-light": "#008170",
       },
       boxShadow: {
         sidebar: "0 12px 10px #e9edc9",

@@ -16,6 +16,7 @@ import {
   selectUsername,
 } from "../../../../features/user/userSlice"
 import CustomButton from "../../../components/reusable/custom-button"
+import UserTag from "../../../components/reusable/user-taglink"
 
 interface CommentItemProps {
   comment: Comment
@@ -24,7 +25,9 @@ interface CommentItemProps {
 const CommentItem = ({ comment }: CommentItemProps) => {
   return (
     <div className="w-full h-fit border-2 border-primary-dark comment rounded-lg p-2 flex flex-col items-start justify-center">
-      <div>{comment.username}</div>
+      <div>
+        <UserTag username={comment.username} />
+      </div>
       <div>{comment.content}</div>
     </div>
   )
@@ -63,14 +66,14 @@ const CommentBox = ({ blogId }: CommentBoxProps) => {
   }
   /**TODO: */
   return (
-    <div className="bg-white commentrounded-xl shadow-2xl border-4 h-full min-w-fit block max-w-full border-primary-dark px-4 py-2 hide-scrollbar">
+    <div className="bg-white comment rounded-xl shadow-2xl border-4 h-full block w-full border-primary-dark px-4 py-2 hide-scrollbar">
       <div className="flex w-full flex-col justify-between items-center">
         <div className="font-bold bg-transparent text-3xl">
           <span className="bg-gradient-to-r from-primary-dark to-bg-primary bg-clip-text text-transparent">
             Comments
           </span>
         </div>
-        <div className="min-h-[300px] max-h-[350px] p-4 shadow-custom-inset rounded-xl border-2 border-primary-dark w-full overflow-scroll hide-scrollbar space-y-4 my-2">
+        <div className="min-h-[300px] max-h-[350px]  p-4 shadow-custom-inset rounded-xl border-2 border-primary-dark w-full overflow-scroll hide-scrollbar space-y-4 my-2 text-wrap">
           {(listStatus === "LOADING" || listStatus === "ERROR") && (
             <CircularProgress />
           )}

@@ -1,7 +1,7 @@
 import React from "react"
 import { useState } from "react"
 import type { RegisterForm } from "./registerScript"
-import { redirect } from "react-router-dom"
+import { Link, redirect } from "react-router-dom"
 import {
   Button,
   Card,
@@ -97,7 +97,7 @@ const Register = () => {
     }
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/user/register",
+        "http://localhost:8080/api/register",
         JSON.stringify(formData),
         {
           headers: {
@@ -164,6 +164,9 @@ const Register = () => {
           >
             Submit
           </button>
+          <span className="text-lg flex items-center justify-center">
+            <Link to={"/login"}>Already a member? Login here</Link>
+          </span>
         </div>
       </div>
       {/* Left Side */}

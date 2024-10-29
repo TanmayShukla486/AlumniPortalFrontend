@@ -46,7 +46,7 @@ export const userSlice = createAppSlice({
     login: create.asyncThunk<CredentialWrapper, LoginDetails>(
       async data => {
         const response = await axios.post(
-          "http://localhost:8080/api/user/login",
+          "http://localhost:8080/api/login",
           JSON.stringify(data),
           {
             headers: {
