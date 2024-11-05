@@ -18,13 +18,13 @@ const CustomInput = ({
   classes,
   disabled = false,
 }: FieldValue) => {
-  const color = classesPassed ? "white" : "black"
+  const color = "white"
   const boxShadow = classesPassed ? "1px 2px 4px #ffffff" : "1px 2px 4px"
   return (
     <div
       className={
         !classesPassed
-          ? "bg-gradient-to-r w-full bg-clip-content rounded-md from-bg-grad-start to-bg-grad-end"
+          ? "bg-gradient-to-r w-full bg-clip-content rounded-md from-bg-light to-bg-dark"
           : classes
       }
     >

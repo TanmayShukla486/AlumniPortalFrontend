@@ -155,7 +155,7 @@ const Register = () => {
         setOpen={() => setViewModal(!viewModal)}
         data={responseData}
       />
-      <div className="flex w-full justify-center items-center bg-gradient-to-r from-bg-primary to-primary-dark bg-clip-text">
+      <div className="flex w-full justify-center items-center bg-gradient-to-r from-bg-light to-bg-dark bg-clip-text">
         <div className="mb-2 text-4xl font-extrabold text-transparent flex gap-x-2">
           Registration{" "}
           <button
@@ -171,15 +171,8 @@ const Register = () => {
       </div>
       {/* Left Side */}
       <div className="w-[90vw] h-[90vh] self-center grid grid-cols-2 gap-8">
-        <Card
-          className="w-full"
-          raised={true}
-          sx={{
-            borderRadius: "14px",
-            border: "solid 4px white",
-          }}
-        >
-          <div className="bg-gradient-to-br from-bg-primary to-primary-dark h-full w-full flex flex-col gap-y-4 p-4 items-center">
+        <div className="w-full ">
+          <div className="bg-bg-light rounded-xl bio border-2 border-white h-full w-full flex flex-col gap-y-4 p-4 items-center">
             <div className="text-2xl font-bold text-white">User Details</div>
             <div className="flex space-x-4 w-full">
               <CustomInput
@@ -209,32 +202,33 @@ const Register = () => {
                 classes=""
               />
               <TextField
-                className="bg-gradient-to-r w-full bg-clip-content rounded-md from-bg-grad-start to-bg-grad-end shadow-lg"
+                className="bg-gradient-to-r w-full bg-clip-content rounded-md from-bg-light to-bg-dark shadow-lg"
                 label="Graduation Year"
                 type="number"
                 value={graduationYear}
                 onChange={e => setGraduationYear(parseInt(e.target.value))}
                 sx={{
                   "& .MuiInputBase-input": {
-                    color: "black", // Text color
-                    boxShadow: "1px 2px 4px",
+                    color: "white", // Text color
+                    boxShadow: "1px 2px 4px #ffffff",
                     borderRadius: "6px",
                   },
                   "& .MuiInputLabel-root": {
                     fontWeight: "bold",
+                    color: "white",
                   },
                   "& label.Mui-focused": {
-                    color: "black",
+                    color: "white",
                   },
                   "& .MuiOutlinedInput-root": {
                     "& fieldset": {
                       borderColor: "transparent",
                     },
                     "&:hover fieldset": {
-                      borderColor: "#B2BAC2",
+                      borderColor: "#0f0f0f",
                     },
                     "&.Mui-focused fieldset": {
-                      borderColor: "#bb5e19",
+                      borderColor: "white",
                     },
                   },
                 }}
@@ -256,7 +250,7 @@ const Register = () => {
               classesPassed={false}
               classes=""
             />
-            <div className="bg-gradient-to-r w-full flex justify-end items-center shadow-lg bg-clip-content rounded-md from-bg-grad-start to-bg-grad-end">
+            <div className="bg-gradient-to-r w-full flex justify-end items-center shadow-lg bg-clip-content rounded-md from-bg-light to-bg-dark">
               <TextField
                 className="w-[90vw]"
                 placeholder="Password"
@@ -266,36 +260,42 @@ const Register = () => {
                 onChange={e => setPassword(e.target.value)}
                 sx={{
                   "& .MuiInputBase-input": {
-                    color: "black", // Text color
-                    boxShadow: "1px 2px 4px",
+                    color: "white", // Text color
+                    boxShadow: "1px 2px 4px #ffffff",
                     borderRadius: "6px",
                   },
+                  "& label.Mui-root": {
+                    color: "white",
+                  },
                   "& label.Mui-focused": {
-                    color: "#bb5e19",
+                    color: "white",
                   },
                   "& .MuiOutlinedInput-root": {
                     "& fieldset": {
                       borderColor: "transparent",
                     },
                     "&:hover fieldset": {
-                      borderColor: "#B2BAC2",
+                      borderColor: "white",
                     },
                     "&.Mui-focused fieldset": {
-                      borderColor: "#bb5e19",
+                      borderColor: "white",
                     },
                   },
                 }}
               />
-              <div className="z-10 absolute justify-end flex mr-2">
+              <div className="z-10 absolute justify-end flex mr-2 ">
                 <IconButton onClick={() => setIsHidden(!isHidden)}>
                   <SvgIcon
                     component={isHidden ? VisibilityIcon : VisibilityOffIcon}
                     className="transition-all ease-in-out duration-300"
+                    sx={{
+                      color: "white",
+                    }}
                   />
                 </IconButton>
               </div>
             </div>
-            <div className="bg-gradient-to-br w-full bg-clip-content rounded-md from-bg-grad-start to-bg-grad-end bio">
+            <div className="bg-gradient-to-br w-full bg-clip-content rounded-md from-bg-light to-bg-dark bio">
               <TextField
                 className="w-full h-full"
                 size="medium"
@@ -306,40 +306,40 @@ const Register = () => {
                 onChange={e => setBio(e.target.value)}
                 sx={{
                   "& .MuiInputBase-input": {
-                    color: "black", // Text color
+                    color: "white", // Text color
                     borderRadius: "6px",
                   },
                   "& label.Mui-focused": {
-                    color: "#bb5e19",
+                    color: "white",
                   },
                   "& .MuiOutlinedInput-root": {
                     "& fieldset": {
                       borderColor: "transparent",
                     },
                     "&:hover fieldset": {
-                      borderColor: "#B2BAC2",
+                      borderColor: "white",
                     },
                     "&.Mui-focused fieldset": {
-                      borderColor: "#bb5e19",
+                      borderColor: "white",
                     },
                   },
                 }}
               />
             </div>
           </div>
-        </Card>
+        </div>
         {/* Right Side */}
         <Card
           className="w-full"
           raised={true}
           sx={{
             borderRadius: "14px",
-            border: "solid 4px #b55e19",
+            border: "solid 2px white",
           }}
         >
-          <div className="bg-gradient-to-r from-bg-grad-start to-bg-grad-end h-full w-full">
+          <div className="bg-gradient-to-r from-bg-light to-bg-dark h-full w-full">
             <div className=" h-full w-full flex flex-col gap-y-4 p-4 items-center ">
-              <div className="text-2xl font-bold bg-gradient-to-br from-bg-primary to-primary-dark bg-clip-text">
+              <div className="text-2xl font-bold bg-gradient-to-br from-white to-slate-400 bg-clip-text">
                 <span className="text-transparent">Company Details</span>
               </div>
               <div className="w-full">
@@ -354,14 +354,16 @@ const Register = () => {
               </div>
               <div className="flex w-full px-4">
                 <div className="flex-1 flex items-center">
-                  <div className="text-primary-dark">Currently Working</div>
+                  <div className="text-primary-dark text-white">
+                    Currently Working
+                  </div>
                   <Checkbox
                     value={isChecked}
                     onClick={() => setIsChecked(!isChecked)}
                   />
                 </div>
                 <div className="flex items-center justify-center gap-x-4">
-                  <div className="flex items-center text-primary-dark">
+                  <div className="flex items-center text-white">
                     Years Worked:
                   </div>
                   <div className="flex-auto flex flex-end -mr-2">
@@ -371,22 +373,22 @@ const Register = () => {
                       type={"number"}
                       sx={{
                         "& .MuiInputBase-input": {
-                          color: "#b55e19", // Text color
-                          boxShadow: "2px 4px 5px",
+                          color: "white", // Text color
+                          boxShadow: "2px 4px 5px white",
                           borderRadius: "6px",
                         },
                         "& label.Mui-focused": {
-                          color: "#bb5e19",
+                          color: "white",
                         },
                         "& .MuiOutlinedInput-root": {
                           "& fieldset": {
-                            borderColor: "#bb5e19",
+                            borderColor: "white",
                           },
                           "&:hover fieldset": {
-                            borderColor: "#B2BAC2",
+                            borderColor: "#0f0f0f",
                           },
                           "&.Mui-focused fieldset": {
-                            borderColor: "#bb5e19",
+                            borderColor: "white",
                           },
                         },
                       }}
@@ -401,10 +403,10 @@ const Register = () => {
                   sx={{
                     borderRadius: "12.5px",
                     width: "25%",
-                    border: "solid 4px #b55e19",
+                    border: "solid 4px white",
                     transition: "translate 0.5s, shadow 0.5s",
                     ":hover": {
-                      boxShadow: "4px 2px 4px #bb5e19",
+                      boxShadow: "4px 2px 4px white",
                       translate: "-1px -2px 10px",
                     },
                   }}
