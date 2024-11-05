@@ -50,20 +50,20 @@ const Login = () => {
             border: "solid 4px white",
           }}
         >
-          <div className="bg-gradient-to-br from-bg-primary to-primary-dark h-full w-full flex flex-col gap-y-4 p-4 items-center">
+          <div className="bg-gradient-to-br from-bg-light to-bg-dark h-full w-full flex flex-col gap-y-4 p-4 items-center">
             <div className="text-2xl font-bold text-white">Login</div>
             <div className="flex flex-col items-center justify-center space-y-4 w-full">
               <CustomInput
                 value={username}
                 setValue={setUsername}
                 title="Username"
-                classesPassed={false}
-                classes=""
+                classesPassed
+                classes="w-full bg-clip-content rounded-md bg-content-light"
                 disabled={false}
               />
               <div className="w-full flex-row flex items-center justify-end">
                 <TextField
-                  className="w-full bg-gradient-to-br from-bg-grad-start to-bg-grad-end rounded-md"
+                  className="w-full bg-content-light rounded-md"
                   placeholder="Password"
                   type={isHidden ? "password" : "text"}
                   color={"primary"}
@@ -71,38 +71,39 @@ const Login = () => {
                   onChange={e => setPassword(e.target.value)}
                   sx={{
                     "& .MuiInputBase-input": {
-                      color: "black", // Text color
+                      color: "white", // Text color
                       boxShadow: "1px 2px 4px",
                       borderRadius: "6px",
                     },
                     "& label.Mui-focused": {
-                      color: "#bb5e19",
+                      color: "#232D3F",
                     },
                     "& .MuiOutlinedInput-root": {
                       "& fieldset": {
                         borderColor: "transparent",
                       },
                       "&:hover fieldset": {
-                        borderColor: "#B2BAC2",
+                        borderColor: "#f0f0f0",
                       },
                       "&.Mui-focused fieldset": {
-                        borderColor: "#bb5e19",
+                        borderColor: "#ffffff",
+                        opacity: "100%",
                       },
                     },
                   }}
                 />
-                <div className="z-10 absolute justify-end flex mr-2">
+                <div className="z-10 absolute justify-end flex mr-2 ">
                   <IconButton onClick={() => setIsHidden(!isHidden)}>
                     <SvgIcon
                       component={isHidden ? VisibilityIcon : VisibilityOffIcon}
-                      className="transition-all ease-in-out duration-300"
+                      className="transition-transform ease-in-out duration-300 text-white"
                     />
                   </IconButton>
                 </div>
               </div>
               <button
                 onClick={handleLogin}
-                className="mt-4 mb-6 bg-bg-primary transition-all duration-500 hover:-translate-x-[2px] hover:-translate-y-[2px] text-white hover:shadow-xl text-xl font-bold p-2 rounded-xl border-4 border-bg-primary"
+                className="mt-4 mb-6 bg-gradient-to-br from-content-dark to-content-light transition-all duration-500 hover:-translate-x-[2px] hover:-translate-y-[2px] text-white hover:shadow-xl text-xl font-bold p-2 rounded-xl border-4 border-bg-primary"
               >
                 Login
               </button>

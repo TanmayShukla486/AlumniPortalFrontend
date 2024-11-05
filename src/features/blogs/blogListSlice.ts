@@ -57,6 +57,67 @@ export const blogListSlice = createAppSlice({
         },
       },
     ),
+    fetchBlogsWithCategory: create.asyncThunk<
+      BlogResponse,
+      { category: string; token: string }
+    >(
+      async ({ category, token }) => {
+        const config: ConfigType = {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            RefreshToken: "",
+          },
+        }
+        const response = await axios.get(
+          `http://localhost:8080/api/blog?category=${category}`,
+          config,
+        )
+        return response.data
+      },
+      {
+        pending: state => {
+          state.status = "LOADING"
+        },
+        fulfilled: (state, action) => {
+          state.status = "IDLE"
+          state.list = action.payload.data
+        },
+        rejected: state => {
+          state.status = "ERROR"
+        },
+      },
+    ),
+    fetchPopularBlogs: create.asyncThunk<BlogResponse, { token: string }>(
+      async ({ token }) => {
+        const config: ConfigType = {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            RefreshToken: "",
+          },
+        }
+        const response = await axios.get(
+          `http://localhost:8080/api/blog/popular`,
+          config,
+        )
+        return response.data
+      },
+      {
+        pending: state => {
+          state.status = "LOADING"
+        },
+        fulfilled: (state, action) => {
+          state.status = "IDLE"
+          state.list = action.payload.data
+        },
+        rejected: state => {
+          state.status = "ERROR"
+        },
+      },
+    ),
   }),
   selectors: {
     selectList: state => state.list,
@@ -64,5 +125,6 @@ export const blogListSlice = createAppSlice({
   },
 })
 
-export const { fetchBlogs } = blogListSlice.actions
+export const { fetchBlogs, fetchBlogsWithCategory, fetchPopularBlogs } =
+  blogListSlice.actions
 export const { selectList, selectListStatus } = blogListSlice.selectors

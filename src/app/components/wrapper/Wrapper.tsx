@@ -11,16 +11,16 @@ const Wrapper: React.FC<PropsWithChildren> = ({ children }) => {
   if (userStatus !== "LOGGEDIN") return <Navigate to="/login" />
 
   return (
-    <div className="grid grid-cols-5 gap-1 w-full h-full">
+    <div className="grid grid-cols-6 gap-1 w-full h-full">
       <div className="col-span-1 text-wrap">
         <Sidebar />
       </div>
-      <div className="col-span-4">
+      <div className="col-span-5">
         <div className="flex flex-col">
           <div className="flex-1">
             <Navbar />
           </div>
-          <div className="flex-auto">{children}</div>
+          <div className="flex-auto mt-4">{children}</div>
         </div>
       </div>
     </div>

@@ -19,7 +19,7 @@ const CustomInput = ({
   disabled = false,
 }: FieldValue) => {
   const color = classesPassed ? "white" : "black"
-  const boxShadow = classesPassed ? "1px 2px 4px #b55e19" : "1px 2px 4px"
+  const boxShadow = classesPassed ? "1px 2px 4px #ffffff" : "1px 2px 4px"
   return (
     <div
       className={
@@ -49,10 +49,10 @@ const CustomInput = ({
               borderColor: "transparent",
             },
             "&:hover fieldset": {
-              borderColor: "#B2BAC2",
+              borderColor: "#f0f0f0",
             },
             "&.Mui-focused fieldset": {
-              borderColor: "#bb5e19",
+              borderColor: "#ffffff",
             },
           },
         }}

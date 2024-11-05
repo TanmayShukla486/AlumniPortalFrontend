@@ -5,6 +5,9 @@ import Register from "./app/pages/register/Register"
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom"
 import ViewBlogs from "./app/pages/view-blog/ViewBlogs"
 import Blog from "./app/pages/blog/Blog"
+import SearchPage from "./app/pages/search-page/SearchPage"
+import Wrapper2 from "./app/components/wrapper/Wrapper2"
+import Popular from "./app/pages/popular/Popular"
 
 const router = createBrowserRouter([
   {
@@ -46,6 +49,18 @@ const router = createBrowserRouter([
   {
     path: "/events",
     element: "Alumni",
+  },
+  {
+    path: "/feed/search",
+    element: <SearchPage />,
+  },
+  {
+    path: "/chat",
+    element: <Wrapper2></Wrapper2>,
+  },
+  {
+    path: "feed/popular",
+    element: <Popular />,
   },
 ])
 

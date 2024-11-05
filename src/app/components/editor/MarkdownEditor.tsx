@@ -44,7 +44,7 @@ const MarkdownEditor = () => {
     useAppSelector(selectToken) || localStorage.getItem("token") || ""
   const refreshToken = useAppSelector(selectRefreshToken) || ""
   useEffect(() => {
-    dispatch(fetchCategories(token))
+    if (categoryStatus === "EMPTY") dispatch(fetchCategories(token))
   }, [])
 
   const [title, setTitle] = useState<string>("")

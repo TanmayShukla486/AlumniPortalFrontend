@@ -11,7 +11,7 @@ export interface Category {
 
 export interface CategoryState {
   categories: Category[] | []
-  status: "IDLE" | "LOADING" | "ERROR"
+  status: "LOADED" | "LOADING" | "ERROR" | "EMPTY"
 }
 
 interface CategoryResponse {
@@ -22,7 +22,7 @@ interface CategoryResponse {
 
 const initialState: CategoryState = {
   categories: [],
-  status: "IDLE",
+  status: "EMPTY",
 }
 
 export const categorySlice = createAppSlice({
@@ -52,7 +52,7 @@ export const categorySlice = createAppSlice({
         },
         fulfilled: (state, action) => {
           state.categories = action.payload.data
-          state.status = "IDLE"
+          state.status = "LOADED"
         },
         rejected: (state, error) => {
           state.status = "ERROR"

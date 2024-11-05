@@ -9,7 +9,7 @@ import AnnouncementIcon from "@mui/icons-material/Announcement"
 import SvgIcon from "@mui/icons-material/AppRegistration"
 import LogoutIcon from "@mui/icons-material/Logout"
 
-const navbarItems: ButtonItemProps[] = [
+export const navbarItems: ButtonItemProps[] = [
   {
     title: "Register",
     Icon: AppRegistrationIcon,

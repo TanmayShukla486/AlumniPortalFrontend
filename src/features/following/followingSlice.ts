@@ -10,11 +10,13 @@ interface Response {
 
 export interface FollowingState {
   following: Follower[]
+  completeFollowing: Follower[]
   status: "IDLE" | "LOADING" | "ERROR"
 }
 
 const initialState: FollowingState = {
   following: [],
+  completeFollowing: [],
   status: "IDLE",
 }
 
@@ -78,7 +80,7 @@ export const followingSlice = createAppSlice({
           state.status = "LOADING"
         },
         fulfilled: (state, action) => {
-          state.following = action.payload.data
+          state.completeFollowing = action.payload.data
           state.status = "IDLE"
         },
         rejected: state => {
