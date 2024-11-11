@@ -1,4 +1,4 @@
-import { Button, Card, Modal, TextField } from "@mui/material"
+import { Button, Card, Divider, Modal, TextField } from "@mui/material"
 import React, { useEffect } from "react"
 import CustomInput from "../register/components/input-field"
 import CustomButton from "../../components/reusable/custom-button"
@@ -12,32 +12,32 @@ import {
   selectToken,
 } from "../../../features/user/userSlice"
 import { getBlog, selectBlog } from "../../../features/blogs/blogSlice"
+import EventBox from "../home/components/Event"
 
 const Blog = () => {
   let { id } = useParams()
   if (!id) id = "1"
-  const token =
-    useAppSelector(selectToken) || localStorage.getItem("token") || ""
-  const refreshToken = useAppSelector(selectRefreshToken) || ""
-  const dispatch = useAppDispatch()
-  const blog = useAppSelector(selectBlog)
-  useEffect(() => {
-    dispatch(
-      getBlog({
-        id: parseInt(id),
-        token,
-        refreshToken,
-      }),
-    )
-  }, [])
   return (
     <Wrapper>
-      <div className="flex items-center justify-end h-[calc(100%-4rem)] px-4 mt-4">
-        <div className="flex-auto overflow-scroll hide-scrollbar">
-          <BlogBody />
+      <div className="grid grid-cols-10 mt-4 pr-2 h-[84vh]">
+        <div className="col-span-8 overflow-scroll hide-scrollbar">
+          <div className="flex flex-col">
+            <BlogBody id={id} />
+            <Divider
+              variant="fullWidth"
+              sx={{
+                borderColor: "white",
+                marginTop: "8px",
+                marginRight: "12px",
+              }}
+            />
+            <div className="pr-4 w-full">
+              <CommentBox blogId={parseInt(id)} />
+            </div>
+          </div>
         </div>
-        <div className="flex-1 h-full max-h-full w-full overflow-x-clip overflow-y-scroll hide-scrollbar">
-          <CommentBox blogId={parseInt(id)} />
+        <div className="col-span-2">
+          <EventBox />
         </div>
       </div>
     </Wrapper>

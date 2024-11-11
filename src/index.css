@@ -31,8 +31,20 @@
   box-shadow: 2px 2px 8px;
 }
 
+.shadow-default {
+  box-shadow: 2px 2px 8px #0f0f0f;
+}
+
 .shadow-custom-inset-colored {
   box-shadow: inset 2px 2px 8px #b55e19;
+}
+
+.shadow-button {
+  box-shadow: 2px 2px 8px #0f0f0f;
+}
+
+.shadow-button2:hover {
+  box-shadow: 2px 2px 8px #0f0f0f;
 }
 
 .markdown-editor {

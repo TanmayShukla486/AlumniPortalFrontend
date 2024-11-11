@@ -1,4 +1,12 @@
-import { Card, CardContent, CircularProgress } from "@mui/material"
+import {
+  Card,
+  CardContent,
+  CircularProgress,
+  Divider,
+  IconButton,
+  SvgIcon,
+  TextField,
+} from "@mui/material"
 import React, { useEffect, useState } from "react"
 import CustomInput from "../../register/components/input-field"
 import {
@@ -17,6 +25,8 @@ import {
 } from "../../../../features/user/userSlice"
 import CustomButton from "../../../components/reusable/custom-button"
 import UserTag from "../../../components/reusable/user-taglink"
+import ThumbUpIcon from "@mui/icons-material/ThumbUp"
+import OutlinedFlagIcon from "@mui/icons-material/OutlinedFlag"
 
 interface CommentItemProps {
   comment: Comment
@@ -24,11 +34,35 @@ interface CommentItemProps {
 
 const CommentItem = ({ comment }: CommentItemProps) => {
   return (
-    <div className="w-full h-fit border-2 border-primary-dark comment rounded-lg p-2 flex flex-col items-start justify-center">
-      <div>
-        <UserTag username={comment.username} />
+    <div className="w-full text-white">
+      <div className="w-full flex flex-row justify-between">
+        <div className="w-24">
+          <UserTag username={comment.username} />
+          <Divider
+            variant="fullWidth"
+            sx={{
+              borderColor: "white",
+            }}
+          />
+        </div>
+        <div>
+          <SvgIcon component={OutlinedFlagIcon} />
+        </div>
       </div>
-      <div>{comment.content}</div>
+      <div className="mt-2 text-md">{comment.content}</div>
+      <div className="w-full flex flex-row space-x-4 mt-4">
+        <div className="text-white  flex flex-row space-x-1 items-center justify-center cursor-pointer">
+          <SvgIcon component={ThumbUpIcon} fontSize="small" />
+          <div>{comment.likes}</div>
+        </div>
+      </div>
+      <Divider
+        variant="fullWidth"
+        sx={{
+          borderColor: "white",
+          marginTop: "8px",
+        }}
+      />
     </div>
   )
 }
@@ -66,45 +100,71 @@ const CommentBox = ({ blogId }: CommentBoxProps) => {
   }
   /**TODO: */
   return (
-    <div className="bg-white comment rounded-xl shadow-2xl border-4 h-full block w-full border-primary-dark px-4 py-2 hide-scrollbar">
-      <div className="flex w-full flex-col justify-between items-center">
-        <div className="font-bold bg-transparent text-3xl">
-          <span className="bg-gradient-to-r from-primary-dark to-bg-primary bg-clip-text text-transparent">
-            Comments
-          </span>
-        </div>
-        <div className="min-h-[300px] max-h-[350px]  p-4 shadow-custom-inset rounded-xl border-2 border-primary-dark w-full overflow-scroll hide-scrollbar space-y-4 my-2 text-wrap">
-          {(listStatus === "LOADING" || listStatus === "ERROR") && (
-            <CircularProgress />
-          )}
-          {listStatus === "IDLE" &&
-            comments.length > 0 &&
-            comments.map(comment => (
-              <CommentItem comment={comment} key={comment.id} />
-            ))}
-          {listStatus === "IDLE" && comments.length === 0 && (
-            <div>No comments</div>
-          )}
-        </div>
-        <CustomInput
-          value={text}
-          setValue={setText}
-          title="Type your comment here"
-          classesPassed
-          disabled={false}
-          classes="text-white bg-gradient-to-r w-full bg-clip-content rounded-md from-bg-primary to-primary-dark"
-        />
-        <CustomButton
-          customBgColor="#d4a373"
-          customColor="#b55e19"
-          customBorder="2px solid #b55e19"
-          onClick={e => {
-            e.preventDefault()
-            handleAddComment()
+    <div className="flex w-full flex-col justify-start items-start">
+      <div className="font-bold bg-transparent text-3xl">
+        <div className=" bg-clip-text text-content-dark mt-2">Comments</div>
+        <Divider
+          variant="fullWidth"
+          sx={{
+            borderColor: "white",
           }}
+        />
+      </div>
+      <div className="w-full mt-2 hide-scrollbar">
+        <TextField
+          className="w-full text-justify"
+          placeholder="Enter your comment"
+          multiline
+          value={text}
+          onChange={e => setText(e.target.value)}
+          rows={3}
+          sx={{
+            "& .MuiInputBase-input": {
+              "&::-webkit-scrollbar": {
+                display: "none",
+              },
+              "-ms-overflow-style": "none", // Internet Explorer 10+
+              scrollbarWidth: "none", // Firefox
+            },
+            "& label.Mui-focused": {
+              color: "#ffffff",
+            },
+            "& .MuiInput-underline:after": {
+              borderBottomColor: "#ffffff",
+            },
+            "& .MuiOutlinedInput-root": {
+              color: "white",
+              "& fieldset": {
+                borderColor: "#ffffff",
+              },
+              "&:hover fieldset": {
+                borderColor: "#ffffff",
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "#ffffff",
+              },
+            },
+          }}
+        />
+        <button
+          className="ml-2 mt-2 bg-content-dark text-white text-md px-4 py-1 rounded-full border-2 border-content-light hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all duration-150 ease-in shadow-button2"
+          onClick={handleAddComment}
         >
-          Add comment
-        </CustomButton>
+          Add Comment
+        </button>
+      </div>
+      <div className="mt-2 bg-content-dark p-4 w-full text-white opacity-50 rounded-xl border-2 border-white space-y-4">
+        {(listStatus === "LOADING" || listStatus === "ERROR") && (
+          <CircularProgress />
+        )}
+        {listStatus === "IDLE" &&
+          comments.length > 0 &&
+          comments.map(comment => (
+            <CommentItem comment={comment} key={comment.id} />
+          ))}
+        {listStatus === "IDLE" && comments.length === 0 && (
+          <div>No comments</div>
+        )}
       </div>
     </div>
   )

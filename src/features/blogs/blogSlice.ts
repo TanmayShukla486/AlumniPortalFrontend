@@ -18,6 +18,7 @@ export interface Blog {
   author: string
   likes: number
   commentsEnabled: boolean
+  commentCount: number
 }
 
 interface LikeResponse {
@@ -150,6 +151,9 @@ export const blogSlice = createAppSlice({
         pending: () => {},
         fulfilled: (state, action) => {
           state.likes = action.payload.data
+        },
+        rejected: state => {
+          state.status = "IDLE"
         },
       },
     ),

@@ -9,6 +9,7 @@ import { blogSlice } from "../../features/blogs/blogSlice"
 import { categorySlice } from "../../features/categories/categorySlice"
 import { followingSlice } from "../../features/following/followingSlice"
 import { recommendedSlice } from "../../features/recommended/recommendedSlice"
+import { eventSlice } from "../../features/events/eventSlice"
 
 const rootReducer = combineSlices(
   userSlice,
@@ -19,6 +20,7 @@ const rootReducer = combineSlices(
   categorySlice,
   followingSlice,
   recommendedSlice,
+  eventSlice,
 )
 export type RootState = ReturnType<typeof rootReducer>
 

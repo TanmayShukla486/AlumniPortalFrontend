@@ -7,6 +7,7 @@ import SidebarUser from "../reusable/sidebar-user"
 import ChatIcon from "@mui/icons-material/Chat"
 import HomeIcon from "@mui/icons-material/Home"
 import CreateIcon from "@mui/icons-material/Create"
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings"
 import { useAppSelector } from "../../redux/hooks"
 import { selectRole } from "../../../features/user/userSlice"
 import { Divider, Skeleton } from "@mui/material"
@@ -72,6 +73,13 @@ const Sidebar = () => {
           Icon={CreateIcon}
           href="/create-blog"
           title="Create Blog"
+        />
+      )}
+      {role === "ADMIN" && (
+        <SidebarItem
+          Icon={AdminPanelSettingsIcon}
+          href="/admin"
+          title="Admin Dashboard"
         />
       )}
       <Divider

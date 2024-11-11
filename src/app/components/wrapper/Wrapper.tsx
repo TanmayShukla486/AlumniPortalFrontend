@@ -20,7 +20,7 @@ const Wrapper: React.FC<PropsWithChildren> = ({ children }) => {
           <div className="flex-1">
             <Navbar />
           </div>
-          <div className="flex-auto mt-4">{children}</div>
+          <div className="h-full">{children}</div>
         </div>
       </div>
     </div>

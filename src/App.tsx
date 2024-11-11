@@ -8,6 +8,15 @@ import Blog from "./app/pages/blog/Blog"
 import SearchPage from "./app/pages/search-page/SearchPage"
 import Wrapper2 from "./app/components/wrapper/Wrapper2"
 import Popular from "./app/pages/popular/Popular"
+import AdminHome from "./app/pages/admin/home/AdminHome"
+import AdminWrapper from "./app/pages/admin/components/AdminWrapper"
+import AdminWrapper2 from "./app/pages/admin/components/AdminWrapper2"
+import AdminEvent from "./app/pages/admin/events/AdminEvent"
+import AlumniDisplay from "./app/pages/alumni/AlumniDisplay"
+import UserPage from "./app/pages/user-page/UserPage"
+import ChatPage from "./app/pages/chat/ChatPage"
+import About from "./app/pages/about/About"
+import Contact from "./app/pages/contact/Contact"
 
 const router = createBrowserRouter([
   {
@@ -40,15 +49,19 @@ const router = createBrowserRouter([
   },
   {
     path: "/user/:username",
-    element: <div>Hello World</div>,
+    element: <UserPage />,
+  },
+  {
+    path: "/about",
+    element: <About />,
+  },
+  {
+    path: "/contact",
+    element: <Contact />,
   },
   {
     path: "/events",
     element: <div>Events</div>,
-  },
-  {
-    path: "/events",
-    element: "Alumni",
   },
   {
     path: "/feed/search",
@@ -56,11 +69,23 @@ const router = createBrowserRouter([
   },
   {
     path: "/chat",
-    element: <Wrapper2></Wrapper2>,
+    element: <ChatPage />,
   },
   {
     path: "feed/popular",
     element: <Popular />,
+  },
+  {
+    path: "admin",
+    element: <AdminHome />,
+  },
+  {
+    path: "admin/events",
+    element: <AdminEvent />,
+  },
+  {
+    path: "alumni",
+    element: <AlumniDisplay />,
   },
 ])
 

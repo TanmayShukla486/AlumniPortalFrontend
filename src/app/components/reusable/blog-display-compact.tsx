@@ -4,6 +4,7 @@ import { Card, Divider, SvgIcon } from "@mui/material"
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt"
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline"
 import { Link } from "react-router-dom"
+import UserTag from "./user-taglink"
 export interface BlogDisplayCompactProps {
   blog: Blog
 }
@@ -51,12 +52,12 @@ const BlogDisplayCompact = ({ blog }: BlogDisplayCompactProps) => {
             </div>
             <div className="flex flex-row bg-gradient-to-r from-bg-content-light/100 to-content-light border-2 border-white px-4 rounded-full py-1 space-x-2">
               <SvgIcon component={ChatBubbleOutlineIcon} />
-              <div>123</div>
+              <div>{blog.commentCount}</div>
             </div>
           </div>
 
           <div className="flex flex-row bg-gradient-to-r from-bg-content-light/100 to-content-light border-2 border-white px-4 rounded-full py-1 space-x-2 font-bold">
-            @{blog.author}
+            <UserTag username={blog.author} />
           </div>
         </div>
       </div>

@@ -45,11 +45,11 @@ const Home = () => {
 
   return (
     <Wrapper>
-      <div className="grid grid-cols-6 h-full mt-6 w-full">
-        <div className="col-span-4 mr-12">
+      <div className="grid grid-cols-10 h-[83.5vh] gap-x-4 w-full mt-3">
+        <div className="col-span-7">
           <GeneralDesc />
-        </div>{" "}
-        <div className="col-span-2 mr-8">
+        </div>
+        <div className="col-span-3">
           <EventBox />
         </div>
       </div>

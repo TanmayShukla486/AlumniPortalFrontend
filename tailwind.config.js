@@ -6,8 +6,8 @@ export default {
       colors: {
         "bg-dark": "#0F0F0F",
         "bg-light": "#232D3F",
-        "content-dark": "#232D3F",
-        "content-light": "#008170",
+        "content-dark": "#052238",
+        "content-light": "#39a0ed",
       },
       boxShadow: {
         sidebar: "0 12px 10px #e9edc9",
