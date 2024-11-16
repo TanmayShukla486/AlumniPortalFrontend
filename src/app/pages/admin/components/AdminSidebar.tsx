@@ -43,9 +43,9 @@ const sidebarItems: ButtonItemProps[] = [
     href: "/feed",
   },
   {
-    title: "Notices",
+    title: "Job Postings",
     Icon: CampaignIcon,
-    href: "/admin/notices",
+    href: "/admin/job-posting",
   },
 ]
 
@@ -85,34 +85,6 @@ const AdminSidebar = () => {
           title="Admin Dashboard"
         />
       )}
-      {/* <Divider
-        className="w-full pt-5 mt-6"
-        variant="middle"
-        sx={{
-          borderColor: "white",
-        }}
-      />
-      <div className="w-full pl-4">Following</div> */}
-      {/* <div className="flex flex-col overflow-scroll hide-scrollbar w-full h-auto pb-4">
-        {listStatus === "IDLE" &&
-          followingList.length > 0 &&
-          followingList.map(item => (
-            <UserItem
-              Icon={AccountCircleIcon}
-              href={`/user/${item.followed}`}
-              username={item.followed}
-              key={item.followed}
-            />
-          ))}
-        {(listStatus === "LOADING" || listStatus === "ERROR") && (
-          <Skeleton className="flex justify-start rounded-xl items-center space-x-2 color-transition px-2 py-4" />
-        )}
-        {listStatus === "IDLE" && followingList.length === 0 && (
-          <div className="w-full pl-4 pr-8 opacity-50 text-sm">
-            You're not following anyone
-          </div>
-        )}
-      </div> */}
     </div>
   )
 }

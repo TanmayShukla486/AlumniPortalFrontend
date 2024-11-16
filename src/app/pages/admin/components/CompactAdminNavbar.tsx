@@ -17,7 +17,6 @@ const CompactAdminNavbar = () => {
   const categories = useAppSelector(selectCategories)
   const [isOpenCategory, setIsOpenCategory] = useState<boolean>(false)
   const [viewFlaggedContent, setViewFlaggedContent] = useState<boolean>(false)
-  const [viewJobPosting, setViewJobPosting] = useState<boolean>(false)
   const dispatch = useAppDispatch()
   const handleLogout = () => {
     dispatch(logout())
@@ -25,12 +24,6 @@ const CompactAdminNavbar = () => {
   return (
     <div className="w-[84.5vw] h-12 border-b-2 border-white -ml-[18px] bg-gradient-to-tr from-bg-dark to-bg-light flex justify-end flex-row items-center space-x-4 px-4">
       {viewFlaggedContent && <Navigate to="/admin/flagged" />}
-      {viewJobPosting && <Navigate to="/admin/job-requests" />}
-      <div className="text-white hover:bg-content-light px-4 rounded-full hover:text-content-dark transition-colors duration-300 ease-in cursor-pointer">
-        <button onClick={() => setViewJobPosting(true)}>
-          Job Posting Requests
-        </button>
-      </div>
       <div className="text-white hover:bg-content-light px-4 rounded-full hover:text-content-dark transition-colors duration-300 ease-in cursor-pointer">
         <button onClick={() => setViewFlaggedContent(true)}>
           Flagged Content

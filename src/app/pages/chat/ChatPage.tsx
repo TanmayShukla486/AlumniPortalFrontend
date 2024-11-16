@@ -130,12 +130,13 @@ const ChatPage = () => {
       setRecentChats(response.data)
     }
     fetchChatRooms()
+    setInterval(() => fetchChatRooms(), 60000)
   }, [])
   return (
     <ChatProvider token={token} username={username}>
       <Wrapper>
         <div className="grid grid-cols-10 h-[83.5vh] gap-x-4 pt-4 pr-4">
-          <div className="col-span-7 border-2 border-white p-4 overflow-y-scroll hide-scrollbar">
+          <div className="col-span-7 border-2 border-white p-4 overflow-y-scroll hide-scrollbar shadow-custom rounded-2xl bg-gradient-to-b from-content-light/40 to-content-dark">
             {recipient !== "" && !isSearching && (
               <ChatComponent
                 token={token}

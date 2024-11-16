@@ -21,6 +21,7 @@ export const ChatComponent: React.FC<ChatComponentProps> = ({
   useEffect(() => {
     const loadChatHistory = async () => {
       try {
+        console.log("Loading chat history")
         const history = await ChatService.getInstance().getChatHistory(
           token,
           currentUser,
@@ -42,6 +43,7 @@ export const ChatComponent: React.FC<ChatComponentProps> = ({
     if (newMessage.trim()) {
       sendMessage(recipient, newMessage)
       setNewMessage("")
+      scrollTo()
     }
   }
 
@@ -53,7 +55,19 @@ export const ChatComponent: React.FC<ChatComponentProps> = ({
     return <div>Error: {error}</div>
   }
 
-  const allMessages = [...chatHistory, ...messages].sort(
+  const allMessages = [
+    ...chatHistory,
+    ...messages.filter(
+      message =>
+        !chatHistory.some(
+          prevMsg =>
+            prevMsg.content === message.content &&
+            prevMsg.receiver === message.receiver &&
+            prevMsg.timestamp === message.timestamp &&
+            prevMsg.sender === message.sender,
+        ),
+    ),
+  ].sort(
     (a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime(),
   )
 
@@ -68,13 +82,13 @@ export const ChatComponent: React.FC<ChatComponentProps> = ({
             }`}
           >
             <div
-              className={`max-w-[70%] rounded-lg p-3 ${
+              className={`max-w-[70%] rounded-lg py-3 px-4 border-2 ${
                 message.sender === currentUser
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-200 text-gray-800"
+                  ? "bg-content-dark text-white border-white"
+                  : "bg-gray-200 text-gray-800 border-content-dark"
               }`}
             >
-              <div className="text-sm font-semibold mb-1">
+              <div className="text-sm font-semibold mb-1 opacity-50">
                 {message.sender === currentUser ? "You" : message.sender}
               </div>
               <div>{message.content}</div>

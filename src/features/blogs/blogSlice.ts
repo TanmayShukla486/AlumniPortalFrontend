@@ -19,6 +19,7 @@ export interface Blog {
   likes: number
   commentsEnabled: boolean
   commentCount: number
+  alreadyLiked: boolean
 }
 
 interface LikeResponse {

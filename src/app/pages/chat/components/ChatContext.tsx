@@ -33,7 +33,19 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({
         await chatService.connect(token)
 
         const unsubscribe = chatService.onMessage(message => {
-          setMessages(prev => [...prev, message])
+          setMessages(prev => {
+            if (
+              prev.some(
+                m =>
+                  m.timestamp === message.timestamp &&
+                  m.sender === message.sender &&
+                  m.content === message.content,
+              )
+            ) {
+              return prev
+            }
+            return [...prev, message]
+          })
         })
 
         return () => {
@@ -61,7 +73,19 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({
         timestamp: new Date().toISOString(),
       }
       chatService.sendMessage(fullMessage)
-      setMessages(state => [...state, fullMessage])
+      setMessages(state => {
+        if (
+          state.some(
+            message =>
+              message.sender === fullMessage.sender &&
+              message.timestamp === fullMessage.timestamp &&
+              message.content === fullMessage.content &&
+              message.receiver === fullMessage.timestamp,
+          )
+        )
+          return state
+        return [...state, fullMessage]
+      })
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to send message")
     }

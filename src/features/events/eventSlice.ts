@@ -113,6 +113,10 @@ export const eventSlice = createAppSlice({
         },
       },
     ),
+    filterEvent: create.reducer<{ id: number }>((state, action) => {
+      const { id } = action.payload
+      state.events = state.events.filter(it => it.id !== id)
+    }),
   }),
   selectors: {
     selectEventList: events => events.events,
@@ -120,5 +124,6 @@ export const eventSlice = createAppSlice({
   },
 })
 
-export const { getEvents, addEvent, removeEvent } = eventSlice.actions
+export const { getEvents, addEvent, removeEvent, filterEvent } =
+  eventSlice.actions
 export const { selectEventList, selectEventListStatus } = eventSlice.selectors

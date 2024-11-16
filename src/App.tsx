@@ -6,22 +6,26 @@ import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom"
 import ViewBlogs from "./app/pages/view-blog/ViewBlogs"
 import Blog from "./app/pages/blog/Blog"
 import SearchPage from "./app/pages/search-page/SearchPage"
-import Wrapper2 from "./app/components/wrapper/Wrapper2"
 import Popular from "./app/pages/popular/Popular"
 import AdminHome from "./app/pages/admin/home/AdminHome"
-import AdminWrapper from "./app/pages/admin/components/AdminWrapper"
-import AdminWrapper2 from "./app/pages/admin/components/AdminWrapper2"
 import AdminEvent from "./app/pages/admin/events/AdminEvent"
 import AlumniDisplay from "./app/pages/alumni/AlumniDisplay"
 import UserPage from "./app/pages/user-page/UserPage"
 import ChatPage from "./app/pages/chat/ChatPage"
 import About from "./app/pages/about/About"
 import Contact from "./app/pages/contact/Contact"
+import JobPosting from "./app/pages/jobs/JobPosting"
+import AdminJobPosting from "./app/pages/admin/posting/AdminJobPosting"
+import SinglePosting from "./app/pages/admin/posting/SinglePosting"
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Navigate to="/register" />,
+  },
+  {
+    path: "/job-posting/create",
+    element: <JobPosting />,
   },
   {
     path: "/register",
@@ -82,6 +86,14 @@ const router = createBrowserRouter([
   {
     path: "admin/events",
     element: <AdminEvent />,
+  },
+  {
+    path: "admin/job-posting",
+    element: <AdminJobPosting />,
+  },
+  {
+    path: "admin/job-posting/:id",
+    element: <SinglePosting />,
   },
   {
     path: "alumni",

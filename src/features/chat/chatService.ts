@@ -47,7 +47,7 @@ export class ChatService {
         }
 
         this.ws.onerror = error => {
-          console.error("WebSocket error:", error)
+          // console.error("WebSocket error:", error)
           reject(error)
         }
       } catch (error) {
@@ -93,8 +93,6 @@ export class ChatService {
     recipient: string,
   ): Promise<ChatMessage[]> {
     try {
-      console.log(sender)
-      console.log(recipient)
       const response = await fetch(
         `http://localhost:8080/api/chat/history?sender=${sender}&recipient=${recipient}`,
         {

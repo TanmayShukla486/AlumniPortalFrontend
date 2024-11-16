@@ -6,6 +6,7 @@ import EventItemAdmin from "./components/event-item"
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks"
 import {
   addEvent,
+  filterEvent,
   getEvents,
   removeEvent,
   selectEventList,
@@ -32,12 +33,18 @@ const AdminEvent = () => {
         data: { title: eventTitle, content: eventDesc, date: date },
       }),
     )
+    setEventTitle("")
+    setEventDesc("")
+    setDate("")
     setTimeout(() => {
       getEvents(token)
-    }, 3000)
+    }, 30000)
   }
   const handleRemoveEvent = (id: number) => {
     dispatch(removeEvent({ id, token }))
+    dispatch(filterEvent({ id }))
+
+    setTimeout(() => dispatch(getEvents(token)), 30000)
   }
   useEffect(() => {
     dispatch(getEvents(token))

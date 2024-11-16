@@ -9,13 +9,16 @@ import {
 } from "../../../features/following/followingSlice"
 import {
   selectRefreshToken,
+  selectRole,
   selectToken,
   selectUsername,
 } from "../../../features/user/userSlice"
 import { fetchBlogs } from "../../../features/blogs/blogListSlice"
+import { Navigate } from "react-router-dom"
 
 const Home = () => {
   const dispatch = useAppDispatch()
+  const role = useAppSelector(selectRole)
   const username = useAppSelector(selectUsername) || ""
   const token =
     useAppSelector(selectToken) || localStorage.getItem("token") || ""
@@ -42,6 +45,8 @@ const Home = () => {
       }),
     )
   }, [])
+
+  if (role === "ADMIN") return <Navigate to="/admin" />
 
   return (
     <Wrapper>

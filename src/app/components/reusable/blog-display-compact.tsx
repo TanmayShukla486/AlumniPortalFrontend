@@ -3,6 +3,7 @@ import { Blog } from "../../../features/blogs/blogSlice"
 import { Card, Divider, SvgIcon } from "@mui/material"
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt"
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline"
+import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt"
 import { Link } from "react-router-dom"
 import UserTag from "./user-taglink"
 export interface BlogDisplayCompactProps {
@@ -47,7 +48,11 @@ const BlogDisplayCompact = ({ blog }: BlogDisplayCompactProps) => {
         <div className="flex flex-row justify-between items-center pt-4">
           <div className="flex flex-row justify-between items-center space-x-8">
             <div className="flex flex-row bg-gradient-to-r from-bg-content-light/100 to-content-light border-2 border-white px-4 rounded-full py-1 space-x-2">
-              <SvgIcon component={ThumbUpOffAltIcon} />
+              <SvgIcon
+                component={
+                  blog.alreadyLiked ? ThumbUpAltIcon : ThumbUpOffAltIcon
+                }
+              />
               <div>{blog.likes}</div>
             </div>
             <div className="flex flex-row bg-gradient-to-r from-bg-content-light/100 to-content-light border-2 border-white px-4 rounded-full py-1 space-x-2">

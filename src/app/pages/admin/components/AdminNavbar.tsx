@@ -11,11 +11,6 @@ import { ButtonItemProps } from "../../../components/reusable/siderbar-item"
 
 export const navbarItems: ButtonItemProps[] = [
   {
-    title: "Register",
-    Icon: AppRegistrationIcon,
-    href: "/feed/favorite",
-  },
-  {
     title: "Events",
     Icon: EventIcon,
     href: "/feed/following",

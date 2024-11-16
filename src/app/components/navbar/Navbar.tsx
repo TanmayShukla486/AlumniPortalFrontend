@@ -13,7 +13,7 @@ export const navbarItems: ButtonItemProps[] = [
   {
     title: "Job Posting",
     Icon: AppRegistrationIcon,
-    href: "/jobs",
+    href: "/job-posting/create",
   },
   {
     title: "Events",
