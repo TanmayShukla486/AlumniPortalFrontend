@@ -60,10 +60,11 @@ const JobPosting = () => {
   const fetchPostings = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/posting/${username}`,
+        `http://localhost:8080/api/posting/username/${username}`,
         config,
       )
       setPostings(response.data)
+      console.log(response.data)
     } catch (error) {
       console.log(error)
       setPostings([])
@@ -72,7 +73,6 @@ const JobPosting = () => {
   useEffect(() => {
     fetchPostings()
   }, [])
-
   const createPosting = async () => {
     const posting: Posting = {
       id: 0,

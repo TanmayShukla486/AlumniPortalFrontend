@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import AdminWrapper from "../components/AdminWrapper"
-import { Link, useParams } from "react-router-dom"
+import { Link, Navigate, useParams } from "react-router-dom"
 import { useAppSelector } from "../../../redux/hooks"
 import { selectToken } from "../../../../features/user/userSlice"
 import { ConfigType } from "../../../../features/profile/profileSlice"
@@ -39,14 +39,25 @@ const SinglePosting = () => {
   }
   const [posting, setPosting] = useState<Posting>()
   const [list, setPostingList] = useState<Posting[]>([])
+  const [redirect, setRedirect] = useState<boolean>(false)
   useEffect(() => {
     fetchList()
     fetchPosting()
   }, [])
+  const handleEvent = async (val: string) => {
+    const response = await axios.put(
+      `http://localhost:8080/api/posting/${posting?.id}/${val}`,
+      "",
+      config,
+    )
+    if (val === "REJECTED") fetchList()
+    setRedirect(true)
+  }
   const rejected = list.filter(item => item.status === "REJECTED")
   return (
     <AdminWrapper>
       <div className="w-full grid grid-cols-10 h-[83.5vh] gap-x-4 pr-4">
+        {redirect && <Navigate to={"/admin/job-posting"} />}
         <div className="col-span-7 shadow-custom rounded-xl p-4 bg-gradient-to-b from-content-light/40 to-white/50 border-4 border-content-dark">
           <div className="h-12 ml-2 mr-4 flex flex-row justify-between">
             <div className="text-4xl font-extrabold bg-gradient-to-br from-content-dark to-bg-dark bg-clip-text text-transparent">
@@ -101,6 +112,7 @@ const SinglePosting = () => {
                   className="mr-4 text-white py-2 bg-content-dark px-4 flex flex-row items-center justify-center space-x-1 border-2 border-white rounded-full transition-all shadow-default hover:-translate-x-0.5 hover:-translate-y-0.5 duration-300 ease-in-out"
                   onClick={e => {
                     e.preventDefault()
+                    handleEvent("REJECTED")
                   }}
                 >
                   <div>Reject</div>
@@ -110,6 +122,7 @@ const SinglePosting = () => {
                   className="mr-4 text-white py-2 bg-content-dark px-4 flex flex-row items-center justify-center space-x-1 border-2 border-white rounded-full transition-all shadow-default hover:-translate-x-0.5 hover:-translate-y-0.5 duration-300 ease-in-out"
                   onClick={e => {
                     e.preventDefault()
+                    handleEvent("APPROVE")
                   }}
                 >
                   <div>Approve</div>

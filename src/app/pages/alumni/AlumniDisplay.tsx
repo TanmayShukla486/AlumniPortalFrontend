@@ -72,11 +72,11 @@ const AlumniDisplay = () => {
     <Wrapper>
       <div className="grid grid-cols-10 pr-2 gap-x-4 mt-4 h-[83.5vh]">
         <div className="col-span-7">
-          <div className="w-full bg-content-dark h-20 border-2 border-white/80 rounded-xl flex flex-row justify-center items-center px-4 space-x-3">
+          <div className="w-full bg-content-dark h-16 border-2 border-white/80 rounded-xl flex flex-row justify-center items-center px-4 space-x-3">
             <div className="w-1/2 flex flex-row items-center justify-center space-x-8">
-              <div className="text-white text-xl">Username:</div>
+              <div className="text-white text-md">Username:</div>
               <input
-                className="p-4 rounded-2xl"
+                className="p-4 rounded-2xl h-10"
                 placeholder="Enter username"
                 value={search}
                 onChange={e => setSearch(e.target.value)}
@@ -84,10 +84,10 @@ const AlumniDisplay = () => {
             </div>
             <Divider orientation="vertical" sx={{ borderColor: "white" }} />
             <div className="w-1/2 flex flex-row items-center justify-center space-x-8">
-              <div className="text-white text-xl">Graduation Year:</div>
+              <div className="text-white text-md">Graduation Year:</div>
               <div className="flex flex-col items-center justify-center">
                 <button
-                  className="text-content-dark bg-white px-4 py-2 rounded-xl text-xl"
+                  className="text-content-dark bg-white px-4 py-2 rounded-xl text-md"
                   onClick={() => setIsHidden(!isHidden)}
                 >
                   {year !== undefined && year}

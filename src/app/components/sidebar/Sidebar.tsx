@@ -12,6 +12,7 @@ import { useAppSelector } from "../../redux/hooks"
 import { selectRole } from "../../../features/user/userSlice"
 import { Divider, Skeleton } from "@mui/material"
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"
+import WorkIcon from "@mui/icons-material/Work"
 import UserItem from "../reusable/user-item"
 import {
   selectFollowingList,
@@ -43,6 +44,11 @@ const sidebarItems: ButtonItemProps[] = [
     title: "Chat",
     Icon: ChatIcon,
     href: "/chat",
+  },
+  {
+    title: "Jobs",
+    Icon: WorkIcon,
+    href: "/job-posting/all",
   },
 ]
 

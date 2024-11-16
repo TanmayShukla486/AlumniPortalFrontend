@@ -17,6 +17,8 @@ import Contact from "./app/pages/contact/Contact"
 import JobPosting from "./app/pages/jobs/JobPosting"
 import AdminJobPosting from "./app/pages/admin/posting/AdminJobPosting"
 import SinglePosting from "./app/pages/admin/posting/SinglePosting"
+import Postings from "./app/pages/jobs/Postings"
+import Posting from "./app/pages/jobs/Posting"
 
 const router = createBrowserRouter([
   {
@@ -94,6 +96,14 @@ const router = createBrowserRouter([
   {
     path: "admin/job-posting/:id",
     element: <SinglePosting />,
+  },
+  {
+    path: "job-posting/all",
+    element: <Postings />,
+  },
+  {
+    path: "job-posting/:id",
+    element: <Posting />,
   },
   {
     path: "alumni",
