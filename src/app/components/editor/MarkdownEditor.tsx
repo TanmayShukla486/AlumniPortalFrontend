@@ -1,4 +1,5 @@
 import {
+  Alert,
   Button,
   Card,
   Checkbox,
@@ -6,6 +7,7 @@ import {
   darken,
   Input,
   Modal,
+  Snackbar,
   SvgIcon,
   TextField,
 } from "@mui/material"
@@ -19,44 +21,34 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp"
 import SendIcon from "@mui/icons-material/Send"
 
-import {
-  Category,
-  fetchCategories,
-  selectCategories,
-  selectCategoriesStatus,
-} from "../../../features/categories/categorySlice"
+import { fetchCategories } from "../../../features/categories/categorySlice"
 import {
   selectRefreshToken,
   selectToken,
 } from "../../../features/user/userSlice"
-import CategoryItem from "./category-item"
 import {
   Blog,
   postBlog,
   resetBlogStatus,
   selectBlogStatus,
 } from "../../../features/blogs/blogSlice"
-import CustomButton from "../reusable/custom-button"
 
 const MarkdownEditor = ({ category }: { category: string }) => {
   const dispatch = useAppDispatch()
-  const categories = useAppSelector(selectCategories)
-  const categoryStatus = useAppSelector(selectCategoriesStatus)
   const token =
     useAppSelector(selectToken) || localStorage.getItem("token") || ""
   const refreshToken = useAppSelector(selectRefreshToken) || ""
-  useEffect(() => {
-    if (categoryStatus === "EMPTY") dispatch(fetchCategories(token))
-  }, [])
 
   const [title, setTitle] = useState<string>("")
   const [content, setContent] = useState<string>("")
-  const [categoriesVisible, setCategoriesVisible] = useState<boolean>(false)
   const [commentsEnabled, setCommentsEnabled] = useState<boolean>(false)
   const blogStatus = useAppSelector(selectBlogStatus)
-
+  const [categoryToast, setCategoryToast] = useState<boolean>(false)
   const handleSubmit = () => {
-    if (category === "" || !category) return
+    if (category === "" || !category) {
+      setCategoryToast(true)
+      return
+    }
     const blog: Blog = {
       id: 0,
       title,
@@ -67,6 +59,7 @@ const MarkdownEditor = ({ category }: { category: string }) => {
       likes: 0,
       commentsEnabled,
       commentCount: 0,
+      alreadyLiked: false,
     }
     dispatch(
       postBlog({
@@ -86,16 +79,37 @@ const MarkdownEditor = ({ category }: { category: string }) => {
 
   return (
     <div className="w-full h-full">
-      <Modal className="fixed" open={blogStatus === "POSTED"}>
-        <div className="w-1/2 h-1/2 bg-primary-dark opacity-50">
-          <div className="text-2xl text-white font-bold">
-            Successfully posted
-          </div>
-          <Button startIcon={<CloseIcon />} onClick={handleClearClick}>
-            Close
-          </Button>
-        </div>
-      </Modal>
+      <Snackbar
+        open={categoryToast}
+        autoHideDuration={1500}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          severity="error"
+          variant="filled"
+          className="cursor-pointer"
+          onClick={() => setCategoryToast(!categoryToast)}
+        >
+          Select a Category!!
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={blogStatus === "POSTED"}
+        autoHideDuration={1500}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          severity="success"
+          variant="filled"
+          className="cursor-pointer"
+          onClick={() => {
+            handleClearClick()
+            dispatch(resetBlogStatus())
+          }}
+        >
+          Blog Posted Successfully
+        </Alert>
+      </Snackbar>
       <div className="w-full h-full">
         <div className="text-4xl font-extrabold bg-gradient-to-br from-content-dark to-bg-dark bg-clip-text text-transparent h-12 ml-2">
           Create Blog Post
