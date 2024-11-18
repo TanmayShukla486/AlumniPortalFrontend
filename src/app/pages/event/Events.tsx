@@ -17,11 +17,11 @@ import {
 
 const PostingItem = ({ posting }: { posting: Posting }) => {
   return (
-    <div className="w-full p-4 border-2 border-white bg-content-dark rounded-xl shadow-custom transition-all duration-300 ease-in-out hover:translate-x-1 cursor-pointer my-2">
-      <Link to={`/job-posting/${posting.id}`}>
+    <Link to={`/job-posting/${posting.id}`}>
+      <div className="w-full p-4 border-2 border-white bg-content-dark rounded-xl shadow-custom transition-all duration-300 ease-in-out hover:translate-x-1 cursor-pointer my-2">
         <span className="text-white">{posting.title}</span>
-      </Link>
-    </div>
+      </div>
+    </Link>
   )
 }
 
