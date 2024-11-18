@@ -22,11 +22,6 @@ import {
 
 const sidebarItems: ButtonItemProps[] = [
   {
-    title: "Home",
-    Icon: HomeIcon,
-    href: "/home",
-  },
-  {
     title: "Alumni",
     Icon: GroupIcon,
     href: "/alumni",
@@ -54,13 +49,6 @@ const sidebarItems: ButtonItemProps[] = [
 ]
 
 const Sidebar = () => {
-  // const role = useAppSelector(selectRole) || "ALUMNI"
-  // if (role === "ALUMNI")
-  //   sidebarItems.push({
-  //     title: "Create Blog",
-  //     Icon: CreateIcon,
-  //     href: "/",
-  //   })
   const followingList = useAppSelector(selectFollowingList)
   const listStatus = useAppSelector(selectFollowingListStatus)
   const role = useAppSelector(selectRole)
@@ -69,6 +57,9 @@ const Sidebar = () => {
   return (
     <div className="w-60 h-full fixed bg-gradient-to-r from-bg-light to-bg-dark border-r-2 border-white flex flex-col items-center space-y-2 pl-4 pr-8 justify-start py-2 text-white transition-all duration-300 ease-in-out">
       <SidebarUser />
+      {role !== "ADMIN" && (
+        <SidebarItem Icon={HomeIcon} href="/home" title="Home" />
+      )}
       {sidebarItems.map(item => (
         <SidebarItem
           Icon={item.Icon}

@@ -24,11 +24,6 @@ import UserItem from "../../../components/reusable/user-item"
 
 const sidebarItems: ButtonItemProps[] = [
   {
-    title: "Home",
-    Icon: HomeIcon,
-    href: "/home",
-  },
-  {
     title: "Alumni",
     Icon: GroupIcon,
     href: "/alumni",
