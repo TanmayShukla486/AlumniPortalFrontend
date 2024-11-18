@@ -1,4 +1,4 @@
-import { Card } from "@mui/material"
+import { Card, Skeleton } from "@mui/material"
 
 import React, { useEffect } from "react"
 import EventItem from "../../../components/reusable/event-item"
@@ -6,11 +6,14 @@ import { useAppDispatch, useAppSelector } from "../../../redux/hooks"
 import {
   getEvents,
   selectEventList,
+  selectEventListStatus,
 } from "../../../../features/events/eventSlice"
 import { selectToken } from "../../../../features/user/userSlice"
 
 const EventBox = () => {
   const events = useAppSelector(selectEventList)
+  const eventListStatus = useAppSelector(selectEventListStatus)
+  const errorMessage = "Error Occurred"
   const token =
     useAppSelector(selectToken) || localStorage.getItem("token") || ""
   const dispatch = useAppDispatch()
@@ -25,11 +28,24 @@ const EventBox = () => {
         </span>
       </div>
       <div className="h-full overflow-y-scroll my-2 hide-scrollbar text-content-dark">
-        {events.length > 0 &&
+        {eventListStatus === "ERROR" && (
+          <div className="text-white opacity-65">Couldn't fetch events</div>
+        )}
+        {eventListStatus === "LOADING" && (
+          <div>
+            <div>
+              <Skeleton className="w-full" sx={{ height: "56px" }} />
+              <Skeleton className="w-full" sx={{ height: "56px" }} />
+              <Skeleton className="w-full" sx={{ height: "56px" }} />
+            </div>
+          </div>
+        )}
+        {eventListStatus === "IDLE" &&
+          events.length > 0 &&
           events.map((event, index) => (
             <EventItem title={event.title} key={index} />
           ))}
-        {events.length === 0 && (
+        {eventListStatus === "IDLE" && events.length === 0 && (
           <div className="text-white opacity-70">No upcoming events</div>
         )}
       </div>
