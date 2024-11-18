@@ -18,7 +18,7 @@ import {
 } from "../../../features/recommended/recommendedSlice"
 import UserItem from "../reusable/user-item"
 import RecommendedUser from "../reusable/recommended-user"
-import { Divider } from "@mui/material"
+import { Divider, Skeleton } from "@mui/material"
 import {
   fetchCategories,
   selectCategories,
@@ -79,6 +79,17 @@ const Wrapper2: React.FC<PropsWithChildren> = ({ children }) => {
                 <>
                   <div className="text-md font-bold">Recommended People</div>
                   <div className="text-sm mt-2 h-[15%] overflow-y-scroll hide-scrollbar">
+                    {recommendedStatus === "LOADING" && (
+                      <div>
+                        <Skeleton sx={{ height: "48px" }} />
+                        <Skeleton sx={{ height: "48px" }} />
+                      </div>
+                    )}
+                    {recommendedStatus === "ERROR" && (
+                      <div className="text-sm opacity-50">
+                        Error While Fetching
+                      </div>
+                    )}
                     {recommendedStatus === "IDLE" &&
                       recommended
                         .filter(
@@ -109,9 +120,23 @@ const Wrapper2: React.FC<PropsWithChildren> = ({ children }) => {
                   />
                 </>
               )}
+              <div className="mt-2 text-lg font-bold">Explore:</div>
+              {categoriesStatus === "LOADING" && (
+                <div>
+                  <Skeleton sx={{ height: "48px" }} />
+                  <Skeleton sx={{ height: "48px" }} />
+                  <Skeleton sx={{ height: "48px" }} />
+                  <Skeleton sx={{ height: "48px" }} />
+                  <Skeleton sx={{ height: "48px" }} />
+                </div>
+              )}
+              {categoriesStatus === "ERROR" && (
+                <div className="text-sm opacity-50">
+                  Error While Fetching Categories
+                </div>
+              )}
               {categoriesStatus === "IDLE" && (
                 <div>
-                  <div className="mt-2 text-md font-bold">Explore:</div>
                   <div className="mt-4 text-sm overflow-y-scroll hide-scrollbar pl-2 h-[85%]">
                     <div
                       onClick={() => {
