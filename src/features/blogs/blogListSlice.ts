@@ -8,11 +8,13 @@ import { selectRefreshToken, selectToken } from "../user/userSlice"
 export interface BlogsState {
   list: Blog[]
   status: "LOADING" | "IDLE" | "ERROR"
+  errorMessage: string
 }
 
 const initialState: BlogsState = {
   list: [],
   status: "IDLE",
+  errorMessage: "",
 }
 
 interface BlogResponse {
@@ -52,8 +54,9 @@ export const blogListSlice = createAppSlice({
           state.status = "IDLE"
           state.list = action.payload.data
         },
-        rejected: state => {
+        rejected: (state, error) => {
           state.status = "ERROR"
+          state.errorMessage = error.error.message || "Error Occurred"
         },
       },
     ),
@@ -84,8 +87,9 @@ export const blogListSlice = createAppSlice({
           state.status = "IDLE"
           state.list = action.payload.data
         },
-        rejected: state => {
+        rejected: (state, error) => {
           state.status = "ERROR"
+          state.errorMessage = error.error.message || "Error Occurred"
         },
       },
     ),
@@ -113,8 +117,9 @@ export const blogListSlice = createAppSlice({
           state.status = "IDLE"
           state.list = action.payload.data
         },
-        rejected: state => {
+        rejected: (state, error) => {
           state.status = "ERROR"
+          state.errorMessage = error.error.message || "Error Occurred"
         },
       },
     ),
@@ -122,9 +127,11 @@ export const blogListSlice = createAppSlice({
   selectors: {
     selectList: state => state.list,
     selectListStatus: state => state.status,
+    selectListError: state => state.errorMessage,
   },
 })
 
 export const { fetchBlogs, fetchBlogsWithCategory, fetchPopularBlogs } =
   blogListSlice.actions
-export const { selectList, selectListStatus } = blogListSlice.selectors
+export const { selectList, selectListStatus, selectListError } =
+  blogListSlice.selectors
