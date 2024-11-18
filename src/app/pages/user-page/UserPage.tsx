@@ -18,7 +18,7 @@ import {
   selectProfile,
   selectProfileStatus,
 } from "../../../features/profile/profileSlice"
-import { Divider, SvgIcon } from "@mui/material"
+import { Divider, Skeleton, SvgIcon } from "@mui/material"
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"
 import {
   addFollow,
@@ -327,6 +327,41 @@ const UserPage = () => {
   const middleName = profile?.middleName === "" ? profile?.middleName + " " : ""
   return (
     <Wrapper>
+      {profileStatus === "ERROR" && (
+        <div className="h-[70vh] w-full flex items-center justify-center">
+          <Link to="/home">
+            <span className="px-4 text-white/80 text-xl bg-content-dark py-2 rounded-md">
+              Error occurred while loading Profile. Go Back
+            </span>
+          </Link>
+        </div>
+      )}
+      {profileStatus === "LOADING" && (
+        <div>
+          <div className="w-full h-[10vh] mt-6 flex flex-row justify-between items-center">
+            <Skeleton sx={{ height: "120px", width: "40%" }} />
+            <Skeleton
+              sx={{
+                height: "80px",
+                width: "10%",
+                marginRight: "20px",
+                marginTop: "10px",
+              }}
+            />
+          </div>
+          <div className="w-full mt-4">
+            <Skeleton sx={{ height: "70px", width: "75%" }} />
+          </div>
+          <div className="grid grid-cols-10 h-[90vh] gap-4 mr-4 -mt-36">
+            <div className="col-span-3">
+              <Skeleton sx={{ height: "100%" }} />
+            </div>
+            <div className="col-span-7">
+              <Skeleton sx={{ height: "100%" }} />
+            </div>
+          </div>
+        </div>
+      )}
       {profileStatus === "IDLE" && profile !== null && (
         <div className="mr-4 h-[83.5vh] mt-4 flex flex-col items-start justify-start p-4">
           <div className="w-full flex flex-row items-center justify-between pr-4">
