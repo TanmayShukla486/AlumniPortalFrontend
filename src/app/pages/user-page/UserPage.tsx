@@ -193,18 +193,18 @@ const BlogDisplay = ({ blogs }: { blogs: Blog[] }) => {
         <li key={blog.id}>
           <Link to={`/feed/${blog.id}`}>
             <div className="hover:bg-content-dark/60 transition-all duration-300 ease-in-out rounded-md flex flex-col items-start justify-start space-y-2 p-2">
-              <div className="text-white/80 text-xl">{blog.title}</div>
-              <div className="text-white bg-content-light px-4 rounded-full text-sm opacity-75 py-1">
+              <div className="text-content-dark text-xl">{blog.title}</div>
+              <div className="text-white bg-content-dark px-4 rounded-full text-sm opacity-75 py-1">
                 {blog.category}
               </div>
               <Divider
                 sx={{ borderColor: "white", opacity: "50%", width: "36%" }}
               />
-              <div className="text-white text-md opacity-50">
+              <div className="text-black text-md opacity-50">
                 {blog.content.substring(0, 95)}...
               </div>
               <div className="flex flex-row items-center justify-start space-x-6">
-                <div className="flex flex-row items-center space-x-2 opacity-50 bg-content-light px-3 rounded-full">
+                <div className="flex flex-row items-center space-x-2 opacity-50 bg-content-dark px-3 rounded-full">
                   <SvgIcon
                     component={ThumbUpIcon}
                     sx={{ color: "white" }}
@@ -212,7 +212,7 @@ const BlogDisplay = ({ blogs }: { blogs: Blog[] }) => {
                   />
                   <div className="text-white">{blog.likes}</div>
                 </div>
-                <div className="flex flex-row items-center space-x-2 opacity-50 bg-content-light px-3 rounded-full">
+                <div className="flex flex-row items-center space-x-2 opacity-50 bg-content-dark px-3 rounded-full">
                   <SvgIcon
                     component={ChatBubbleIcon}
                     sx={{ color: "white" }}
@@ -360,7 +360,7 @@ const UserPage = () => {
           <div className="text-lg font-semibold opacity-50 ml-12">
             {profile?.bio}
           </div>
-          <div className="grid grid-cols-10 space-x-3 w-full h-full mt-4">
+          <div className="grid grid-cols-10 space-x-3 w-full h-[85%] mt-4">
             <div className="col-span-3 border-4 border-content-dark overflow-y-scroll hide-scrollbar shadow-custom rounded-lg bg-gradient-to-b from-white/20 to-white">
               <div>
                 <div className="flex w-full flex-row justify-center border-b-2 border-content-dark text-white text-md ">
@@ -455,7 +455,7 @@ const UserPage = () => {
                   Comments
                 </button>
               </div>
-              <div className="px-4 h-[92%] py-4">
+              <div className="px-4 h-[92%] py-4 overflow-y-scroll hide-scrollbar">
                 {selectedItem === "Followers" && (
                   <FollowerDisplay followers={profile.followers} />
                 )}
