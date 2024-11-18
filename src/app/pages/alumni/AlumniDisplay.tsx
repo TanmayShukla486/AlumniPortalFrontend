@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import Wrapper2 from "../../components/wrapper/Wrapper2"
 import Wrapper from "../../components/wrapper/Wrapper"
 import EventBox from "../home/components/Event"
 import axios from "axios"
@@ -7,7 +6,8 @@ import { useAppSelector } from "../../redux/hooks"
 import { selectToken, selectUsername } from "../../../features/user/userSlice"
 import { ConfigType } from "../../../features/profile/profileSlice"
 import AlumniItem from "./components/alumni-item"
-import { Divider, TextField } from "@mui/material"
+import { Alert, Divider, Skeleton, Snackbar } from "@mui/material"
+import { Link } from "react-router-dom"
 
 export interface CompactAlumniDetails {
   name: string
@@ -17,8 +17,23 @@ export interface CompactAlumniDetails {
   followers: number
 }
 
+const AlumniSkeleton = () => {
+  return (
+    <div className="grid grid-cols-3 w-full h-36 gap-4">
+      <Skeleton className="col-span-1" />
+      <Skeleton className="col-span-1" />
+      <Skeleton className="col-span-1" />
+    </div>
+  )
+}
+
 const AlumniDisplay = () => {
   const [alumniList, setAlumniList] = useState<CompactAlumniDetails[]>([])
+  const [alumniStatus, setAlumniStatus] = useState<
+    "LOADING" | "IDLE" | "ERROR"
+  >("IDLE")
+  const [error, setError] = useState<string>("")
+  const [alertOpen, setAlertOpen] = useState<boolean>(false)
   const username = useAppSelector(selectUsername)
   const token =
     useAppSelector(selectToken) || localStorage.getItem("token") || ""
@@ -31,9 +46,20 @@ const AlumniDisplay = () => {
     },
   }
   const fetchAlumni = async () => {
-    const response = await axios.get("http://localhost:8080/api/alumni", config)
-    setAlumniList(response.data)
-    setAlumniList(list => list.filter(it => it.username !== username))
+    try {
+      setAlumniStatus("LOADING")
+      const response = await axios.get(
+        "http://localhost:8080/api/alumni",
+        config,
+      )
+      setAlumniStatus("IDLE")
+      setAlumniList(response.data)
+      setAlumniList(list => list.filter(it => it.username !== username))
+    } catch (error) {
+      setAlumniStatus("ERROR")
+      setAlertOpen(true)
+      if (error instanceof Error) setError(error.message)
+    }
   }
 
   const [year, setYear] = useState<number>()
@@ -57,11 +83,21 @@ const AlumniDisplay = () => {
 
   useEffect(() => {
     const fetchSelectiveAlumni = async () => {
-      const query = createQuery()
-      if (query === "") return
-      const response = await axios.get(query, config)
-      setAlumniList(response.data)
-      setAlumniList(list => list.filter(alumni => alumni.username !== username))
+      try {
+        const query = createQuery()
+        if (query === "") return
+        setAlumniStatus("LOADING")
+        const response = await axios.get(query, config)
+        setAlumniList(response.data)
+        setAlumniList(list =>
+          list.filter(alumni => alumni.username !== username),
+        )
+        setAlumniStatus("IDLE")
+      } catch (error) {
+        setAlumniStatus("ERROR")
+        setAlertOpen(true)
+        if (error instanceof Error) setError(error.message)
+      }
     }
 
     const handler = setTimeout(() => fetchSelectiveAlumni(), 500)
@@ -136,16 +172,45 @@ const AlumniDisplay = () => {
             </div>
           </div>
           <div className="grid grid-cols-3 gap-x-2 mt-4">
-            {alumniList.length > 0 &&
+            {alumniStatus === "LOADING" && (
+              <div className="w-full col-span-3">
+                <AlumniSkeleton />
+              </div>
+            )}
+            {alumniStatus === "IDLE" &&
+              alumniList.length > 0 &&
               alumniList.map((alumni, index) => (
                 <AlumniItem alumni={alumni} key={index} />
               ))}
-            {alumniList.length === 0 && (
+            {alumniStatus === "IDLE" && alumniList.length === 0 && (
               <div className="w-full h-full flex flex-col items-center justify-center col-span-3 mt-24 text-2xl font-bold ">
                 <div className="shadow-custom p-4 rounded-xl bg-content-dark text-center">
                   <img src="/404.png" alt="404" className="rounded-2xl" />
                   <div className="mt-2 text-white">No Alumni found</div>
                 </div>
+              </div>
+            )}
+            {alumniStatus === "ERROR" && (
+              <div className="w-full h-full col-span-3 flex items-center justify-center">
+                <Snackbar
+                  open={alertOpen}
+                  autoHideDuration={1500}
+                  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                >
+                  <Alert
+                    severity="error"
+                    variant="filled"
+                    className="cursor-pointer"
+                    onClick={() => setAlertOpen(!alertOpen)}
+                  >
+                    {error === "" ? "Error Occurred" : error}
+                  </Alert>
+                </Snackbar>
+                <Link to="/home">
+                  <span className="bg-content-dark px-4 py-2 rounded-md text-white">
+                    Some Error Occurred. Go back
+                  </span>
+                </Link>
               </div>
             )}
           </div>

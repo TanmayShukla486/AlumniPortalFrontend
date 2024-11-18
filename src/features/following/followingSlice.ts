@@ -12,12 +12,14 @@ export interface FollowingState {
   following: Follower[]
   completeFollowing: Follower[]
   status: "IDLE" | "LOADING" | "ERROR"
+  errorMessage: string
 }
 
 const initialState: FollowingState = {
   following: [],
   completeFollowing: [],
   status: "IDLE",
+  errorMessage: "",
 }
 
 export const followingSlice = createAppSlice({
@@ -83,8 +85,9 @@ export const followingSlice = createAppSlice({
           state.completeFollowing = action.payload.data
           state.status = "IDLE"
         },
-        rejected: state => {
+        rejected: (state, error) => {
           state.status = "ERROR"
+          if (error instanceof Error) state.errorMessage = error.message
         },
       },
     ),
@@ -115,8 +118,9 @@ export const followingSlice = createAppSlice({
           action.payload.data.forEach(item => state.following.push(item))
           state.status = "IDLE"
         },
-        rejected: state => {
+        rejected: (state, error) => {
           state.status = "ERROR"
+          if (error instanceof Error) state.errorMessage = error.message
         },
       },
     ),
@@ -132,11 +136,15 @@ export const followingSlice = createAppSlice({
   selectors: {
     selectFollowingList: following => following.following,
     selectFollowingListStatus: following => following.status,
+    selectFollowingListError: following => following.errorMessage,
   },
 })
 
-export const { selectFollowingList, selectFollowingListStatus } =
-  followingSlice.selectors
+export const {
+  selectFollowingList,
+  selectFollowingListStatus,
+  selectFollowingListError,
+} = followingSlice.selectors
 export const {
   getInitialFollowing,
   getCompleteFollowing,
