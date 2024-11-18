@@ -93,8 +93,12 @@ const Postings = () => {
             </div>
           )}
           {listStatus === "ERROR" && (
-            <div className="w-full h-full flex items-center justify-center text-xl text-white">
-              Oops! Some error occurred
+            <div className="w-full h-full flex items-center justify-center text-xl text-white ">
+              <Link to="/home">
+                <span className="bg-content-dark/60 px-4 py-2 rounded-md">
+                  Oops! Some error occurred. Go back
+                </span>
+              </Link>
             </div>
           )}
         </div>
