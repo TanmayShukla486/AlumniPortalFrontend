@@ -1,27 +1,16 @@
 import {
   Alert,
-  Button,
-  Card,
   Checkbox,
-  CircularProgress,
-  darken,
   Input,
-  Modal,
   Snackbar,
   SvgIcon,
   TextField,
 } from "@mui/material"
-import CloseIcon from "@mui/icons-material/Close"
-import React, { useEffect, useState } from "react"
-import CustomInput from "../../pages/register/components/input-field"
+import React, { useState } from "react"
 import { useAppDispatch, useAppSelector } from "../../redux/hooks"
-import Paper from "@mui/material/Paper"
-import MenuList from "@mui/material/MenuList"
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp"
+
 import SendIcon from "@mui/icons-material/Send"
 
-import { fetchCategories } from "../../../features/categories/categorySlice"
 import {
   selectRefreshToken,
   selectToken,
@@ -30,6 +19,7 @@ import {
   Blog,
   postBlog,
   resetBlogStatus,
+  selectBlogError,
   selectBlogStatus,
 } from "../../../features/blogs/blogSlice"
 
@@ -38,12 +28,13 @@ const MarkdownEditor = ({ category }: { category: string }) => {
   const token =
     useAppSelector(selectToken) || localStorage.getItem("token") || ""
   const refreshToken = useAppSelector(selectRefreshToken) || ""
-
+  const errorMessage = useAppSelector(selectBlogError)
   const [title, setTitle] = useState<string>("")
   const [content, setContent] = useState<string>("")
   const [commentsEnabled, setCommentsEnabled] = useState<boolean>(false)
   const blogStatus = useAppSelector(selectBlogStatus)
   const [categoryToast, setCategoryToast] = useState<boolean>(false)
+  const [open, setOpen] = useState<boolean>(true)
   const handleSubmit = () => {
     if (category === "" || !category) {
       setCategoryToast(true)
@@ -91,6 +82,20 @@ const MarkdownEditor = ({ category }: { category: string }) => {
           onClick={() => setCategoryToast(!categoryToast)}
         >
           Select a Category!!
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={blogStatus === "ERROR" && open}
+        autoHideDuration={1500}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          severity="error"
+          variant="filled"
+          className="cursor-pointer"
+          onClick={() => setOpen(!open)}
+        >
+          {errorMessage}
         </Alert>
       </Snackbar>
       <Snackbar

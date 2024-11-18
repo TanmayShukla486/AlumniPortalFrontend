@@ -32,6 +32,7 @@ export interface BlogState {
   blog: Blog | null
   likes: number
   status: "LOADING" | "IDLE" | "ERROR" | "POSTED"
+  errorMessage: string
 }
 
 interface BlogPostResponse {
@@ -44,6 +45,7 @@ const initialState: BlogState = {
   blog: null,
   likes: 0,
   status: "IDLE",
+  errorMessage: "",
 }
 
 export interface BlogPostDetails {
@@ -90,8 +92,9 @@ export const blogSlice = createAppSlice({
           state.likes = action.payload.data.likes
           state.status = "IDLE"
         },
-        rejected: state => {
+        rejected: (state, error) => {
           state.status = "ERROR"
+          state.errorMessage = error.error.message || "Error Occurred"
         },
       },
     ),
@@ -121,7 +124,7 @@ export const blogSlice = createAppSlice({
         },
         rejected: (state, error) => {
           state.status = "ERROR"
-          console.log(error)
+          state.errorMessage = error.error.message || "Error Occurred"
         },
       },
     ),
@@ -153,8 +156,9 @@ export const blogSlice = createAppSlice({
         fulfilled: (state, action) => {
           state.likes = action.payload.data
         },
-        rejected: state => {
+        rejected: (state, error) => {
           state.status = "IDLE"
+          state.errorMessage = error.error.message || "Error Occurred"
         },
       },
     ),
@@ -185,7 +189,7 @@ export const blogSlice = createAppSlice({
           ;(state.blog = null), (state.status = "IDLE")
         },
         rejected: (state, error) => {
-          console.log(error)
+          state.errorMessage = error.error.message || "Error Occurred"
           state.status = "ERROR"
         },
       },
@@ -198,11 +202,16 @@ export const blogSlice = createAppSlice({
     selectBlog: state => state.blog,
     selectBlogStatus: state => state.status,
     selectBlogLikes: state => state.likes,
+    selectBlogError: state => state.errorMessage,
   },
 })
 
 export const { getBlog, postBlog, removeBlog, resetBlogStatus, likeBlog } =
   blogSlice.actions
 
-export const { selectBlog, selectBlogStatus, selectBlogLikes } =
-  blogSlice.selectors
+export const {
+  selectBlog,
+  selectBlogStatus,
+  selectBlogLikes,
+  selectBlogError,
+} = blogSlice.selectors
