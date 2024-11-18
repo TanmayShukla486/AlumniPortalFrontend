@@ -4,19 +4,22 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks"
 import {
   fetchPopularBlogs,
   selectList,
+  selectListError,
   selectListStatus,
 } from "../../../features/blogs/blogListSlice"
 import {
   selectRefreshToken,
   selectToken,
 } from "../../../features/user/userSlice"
-import { CircularProgress, Divider } from "@mui/material"
+import { Alert, CircularProgress, Divider, Snackbar } from "@mui/material"
 import BlogDisplayCompact from "../../components/reusable/blog-display-compact"
 import EmptyBlock from "../../components/reusable/empty-block"
-import { Navigate } from "react-router-dom"
+import { Link, Navigate } from "react-router-dom"
 
 const Popular = () => {
   const [navigate, setNavigate] = useState<boolean>(false)
+  const [open, setOpen] = useState<boolean>(true)
+  const errorMessage = useAppSelector(selectListError)
   const blogList = useAppSelector(selectList)
   const token =
     useAppSelector(selectToken) || localStorage.getItem("token") || ""
@@ -32,7 +35,7 @@ const Popular = () => {
       <div className="h-[92vh] overflow-scroll hide-scrollbar">
         {navigate && <Navigate to={"/feed"} />}
         <div className="flex flex-col space-y-2 mt-4 h-full text-white pr-8 text-justify">
-          {(blogListStatus === "LOADING" || blogListStatus === "ERROR") && (
+          {blogListStatus === "LOADING" && (
             <div className="">
               <div className="">Loading</div>
               <CircularProgress
@@ -59,6 +62,31 @@ const Popular = () => {
                 />
               </div>
             ))}
+          {blogListStatus === "ERROR" && (
+            <div>
+              <div className="w-full h-full text-center mt-16 text-xl ">
+                <Link to="/home">
+                  <span className="bg-content-dark/60 px-4 py-2 rounded-md">
+                    Error Loading Page. Go back
+                  </span>
+                </Link>
+              </div>
+              <Snackbar
+                open={blogListStatus === "ERROR" && open}
+                autoHideDuration={1500}
+                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+              >
+                <Alert
+                  severity="error"
+                  variant="filled"
+                  className="cursor-pointer"
+                  onClick={() => setOpen(!open)}
+                >
+                  {errorMessage}
+                </Alert>
+              </Snackbar>
+            </div>
+          )}
           {blogListStatus === "IDLE" && blogList.length === 0 && (
             <EmptyBlock
               val={"Blog Posts For Category"}
