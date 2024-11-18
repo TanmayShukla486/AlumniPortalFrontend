@@ -25,9 +25,13 @@ const EventBox = () => {
         </span>
       </div>
       <div className="h-full overflow-y-scroll my-2 hide-scrollbar text-content-dark">
-        {events.map((event, index) => (
-          <EventItem title={event.title} key={index} />
-        ))}
+        {events.length > 0 &&
+          events.map((event, index) => (
+            <EventItem title={event.title} key={index} />
+          ))}
+        {events.length === 0 && (
+          <div className="text-white opacity-70">No upcoming events</div>
+        )}
       </div>
     </div>
   )

@@ -31,6 +31,12 @@
   box-shadow: 2px 2px 8px;
 }
 
+.event-item {
+  white-space: nowrap; /* Prevent text from wrapping to a new line */
+  overflow: hidden; /* Hide overflowing content */
+  text-overflow: ellipsis;
+}
+
 .shadow-default {
   box-shadow: 2px 2px 8px #0f0f0f;
 }

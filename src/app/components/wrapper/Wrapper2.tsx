@@ -3,8 +3,10 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks"
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"
 import {
   selectRefreshToken,
+  selectRole,
   selectStatus,
   selectToken,
+  selectUsername,
 } from "../../../features/user/userSlice"
 import { Navigate, useLocation } from "react-router-dom"
 import Sidebar from "../sidebar/Sidebar"
@@ -26,14 +28,18 @@ import {
   fetchBlogs,
   fetchBlogsWithCategory,
 } from "../../../features/blogs/blogListSlice"
+import { selectFollowingList } from "../../../features/following/followingSlice"
 
 const Wrapper2: React.FC<PropsWithChildren> = ({ children }) => {
   const userStatus = useAppSelector(selectStatus)
+  const username = useAppSelector(selectUsername)
+  const followingList = useAppSelector(selectFollowingList)
   const categories = useAppSelector(selectCategories)
   const categoriesStatus = useAppSelector(selectCategoriesStatus)
   const dispatch = useAppDispatch()
   if (userStatus !== "LOGGEDIN") return <Navigate to="/login" />
   const location = useLocation()
+  const role = useAppSelector(selectRole)
   const recommended = useAppSelector(selectRecommended)
   const recommendedStatus = useAppSelector(selectRecommendedStatus)
   const [query, setQuery] = useState<string>("")
@@ -46,7 +52,7 @@ const Wrapper2: React.FC<PropsWithChildren> = ({ children }) => {
     setNavigation(true)
   }
   useEffect(() => {
-    if (categoriesStatus === "EMPTY") dispatch(fetchCategories(token))
+    if (categoriesStatus === "IDLE") dispatch(fetchCategories(token))
     dispatch(
       getRecommendedUsers({
         token,
@@ -69,32 +75,44 @@ const Wrapper2: React.FC<PropsWithChildren> = ({ children }) => {
           <div className="flex-auto grid grid-cols-12">
             <div className="col-span-10">{children}</div>
             <div className="col-span-2 flex flex-col px-4 py-2 bg-gradient-to-b from-bg-light to-bg-dark text-white h-full w-full border-l-2 border-white b">
-              <div className="text-md font-bold">Recommended People</div>
-              <div className="text-sm mt-2">
-                {recommendedStatus === "IDLE" &&
-                  recommended.map(user => (
-                    <RecommendedUser
-                      Icon={AccountCircleIcon}
-                      username={user.username}
-                      href={`/user/${user.username}`}
-                      key={user.username}
-                    />
-                  ))}
-              </div>
-              <Divider
-                variant="fullWidth"
-                sx={{
-                  height: "8px",
-                  width: "100%",
-                  borderBottomWidth: "2px",
-                  borderColor: "white",
-                  opacity: "40%",
-                }}
-              />
-              {categoriesStatus === "LOADED" && (
+              {role !== "ADMIN" && (
+                <>
+                  <div className="text-md font-bold">Recommended People</div>
+                  <div className="text-sm mt-2 h-[15%] overflow-y-scroll hide-scrollbar">
+                    {recommendedStatus === "IDLE" &&
+                      recommended
+                        .filter(
+                          it =>
+                            it.username !== username &&
+                            !followingList.some(
+                              follow => follow.followed === it.username,
+                            ),
+                        )
+                        .map(user => (
+                          <RecommendedUser
+                            Icon={AccountCircleIcon}
+                            username={user.username}
+                            href={`/user/${user.username}`}
+                            key={user.username}
+                          />
+                        ))}
+                  </div>
+                  <Divider
+                    variant="fullWidth"
+                    sx={{
+                      height: "8px",
+                      width: "100%",
+                      borderBottomWidth: "2px",
+                      borderColor: "white",
+                      opacity: "40%",
+                    }}
+                  />
+                </>
+              )}
+              {categoriesStatus === "IDLE" && (
                 <div>
                   <div className="mt-2 text-md font-bold">Explore:</div>
-                  <div className="mt-4 text-sm">
+                  <div className="mt-4 text-sm overflow-y-scroll hide-scrollbar pl-2 h-[85%]">
                     <div
                       onClick={() => {
                         dispatch(fetchBlogs({ token, refreshToken }))

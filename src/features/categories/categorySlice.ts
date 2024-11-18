@@ -10,8 +10,8 @@ export interface Category {
 }
 
 export interface CategoryState {
-  categories: Category[] | []
-  status: "LOADED" | "LOADING" | "ERROR" | "EMPTY"
+  categories: Category[]
+  status: "IDLE" | "LOADING" | "ERROR"
 }
 
 interface CategoryResponse {
@@ -20,9 +20,15 @@ interface CategoryResponse {
   data: Category[]
 }
 
+interface AddResponse {
+  status: number
+  message: string
+  data: Category
+}
+
 const initialState: CategoryState = {
   categories: [],
-  status: "EMPTY",
+  status: "IDLE",
 }
 
 export const categorySlice = createAppSlice({
@@ -52,12 +58,75 @@ export const categorySlice = createAppSlice({
         },
         fulfilled: (state, action) => {
           state.categories = action.payload.data
-          state.status = "LOADED"
+          state.status = "IDLE"
         },
         rejected: (state, error) => {
           state.status = "ERROR"
           console.log(error)
         },
+      },
+    ),
+    addCategory: create.asyncThunk<
+      AddResponse,
+      { token: string; category: Category }
+    >(
+      async ({ token, category }) => {
+        const refreshToken = ""
+        const config: ConfigType = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            RefreshToken: refreshToken,
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        }
+        const response = await axios.post(
+          "http://localhost:8080/api/admin/category",
+          JSON.stringify(category),
+          config,
+        )
+        return response.data
+      },
+      {
+        rejected: (state, error) => {
+          console.log(error)
+        },
+        fulfilled: (state, action) => {
+          state.categories.push(action.payload.data)
+        },
+        pending: state => {},
+      },
+    ),
+    removeCategory: create.asyncThunk<
+      string,
+      { token: string; category: string }
+    >(
+      async ({ token, category }) => {
+        const refreshToken = ""
+        const config: ConfigType = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            RefreshToken: refreshToken,
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        }
+        const response = await axios.delete(
+          `http://localhost:8080/api/admin/category?name=${category}`,
+          config,
+        )
+        return response.data
+      },
+      {
+        rejected: (state, error) => {
+          console.log(error)
+        },
+        fulfilled: (state, action) => {
+          state.categories = state.categories.filter(
+            item => item.title !== action.payload,
+          )
+        },
+        pending: state => {},
       },
     ),
   }),
@@ -67,6 +136,7 @@ export const categorySlice = createAppSlice({
   },
 })
 
-export const { fetchCategories } = categorySlice.actions
+export const { fetchCategories, addCategory, removeCategory } =
+  categorySlice.actions
 export const { selectCategories, selectCategoriesStatus } =
   categorySlice.selectors

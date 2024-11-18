@@ -27,6 +27,7 @@ export interface UserProfile {
   lastName: string | null
   middleName: string | null
   isAlumni: boolean
+  bio: string
 }
 
 export interface AlumniDetails {
@@ -34,6 +35,7 @@ export interface AlumniDetails {
 }
 
 export interface Follower {
+  id: number
   followed: string
   followedBy: string
 }
@@ -63,7 +65,7 @@ export const profileSlice = createAppSlice({
   reducers: create => ({
     fetchProfile: create.asyncThunk<
       Response,
-      { username: string; token: string; refreshToken: string }
+      { username: string | undefined; token: string; refreshToken: string }
     >(
       async ({ username, token, refreshToken }) => {
         const config: ConfigType = {
@@ -93,6 +95,16 @@ export const profileSlice = createAppSlice({
         },
       },
     ),
+    addProfileFollows: create.reducer<{ follow: Follower }>((state, action) => {
+      if (!state.profile || !state.profile?.followers) return
+      state.profile?.followers.push(action.payload.follow)
+    }),
+    removeProfileFollows: create.reducer<{ id: number }>((state, action) => {
+      if (!state.profile || !state.profile?.followers) return
+      state.profile.followers = state.profile.followers.filter(
+        it => it.id !== action.payload.id,
+      )
+    }),
   }),
   selectors: {
     selectProfile: state => state.profile,
@@ -100,5 +112,6 @@ export const profileSlice = createAppSlice({
   },
 })
 
-export const { fetchProfile } = profileSlice.actions
+export const { fetchProfile, addProfileFollows, removeProfileFollows } =
+  profileSlice.actions
 export const { selectProfile, selectProfileStatus } = profileSlice.selectors

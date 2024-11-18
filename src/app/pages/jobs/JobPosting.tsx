@@ -354,7 +354,7 @@ const JobPosting = () => {
                     marginBottom: "4px",
                   }}
                 />
-                <div className="overflow-y-scroll hide-scrollbar">
+                <div className="overflow-y-scroll hide-scrollbar space-y-2">
                   {postings?.filter(it => it.status === "APPROVED").length >
                     0 &&
                     postings
@@ -402,7 +402,7 @@ const JobPosting = () => {
                     marginBottom: "4px",
                   }}
                 />
-                <div className="overflow-y-scroll hide-scrollbar">
+                <div className="overflow-y-scroll hide-scrollbar space-y-2">
                   {postings?.filter(it => it.status === "REJECTED").length >
                     0 &&
                     postings

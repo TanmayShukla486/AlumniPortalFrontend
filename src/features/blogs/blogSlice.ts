@@ -158,10 +158,38 @@ export const blogSlice = createAppSlice({
         },
       },
     ),
-    removeBlog: create.reducer(state => {
-      state.status = "IDLE"
-      state.blog = null
-    }),
+    removeBlog: create.asyncThunk<
+      { id: number },
+      { token: string; id: number }
+    >(
+      async ({ token, id }) => {
+        const config: ConfigType = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            RefreshToken: "",
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        }
+        const response = await axios.delete(
+          `http://localhost:8080/api/blog/${id}`,
+          config,
+        )
+        return { id }
+      },
+      {
+        pending: state => {
+          state.status = "LOADING"
+        },
+        fulfilled: state => {
+          ;(state.blog = null), (state.status = "IDLE")
+        },
+        rejected: (state, error) => {
+          console.log(error)
+          state.status = "ERROR"
+        },
+      },
+    ),
     resetBlogStatus: create.reducer(state => {
       state.status = "IDLE"
     }),

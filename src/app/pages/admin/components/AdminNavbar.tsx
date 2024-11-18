@@ -13,17 +13,17 @@ export const navbarItems: ButtonItemProps[] = [
   {
     title: "Events",
     Icon: EventIcon,
-    href: "/feed/following",
+    href: "/events",
   },
   {
-    title: "Notices",
+    title: "Contact Us",
     Icon: AnnouncementIcon,
-    href: "/feed/popular",
+    href: "/contact",
   },
   {
     title: "About Us",
     Icon: PeopleAltIcon,
-    href: "/feed",
+    href: "/about",
   },
 ]
 

@@ -8,13 +8,15 @@ import PeopleAltIcon from "@mui/icons-material/PeopleAlt"
 import AnnouncementIcon from "@mui/icons-material/Announcement"
 import SvgIcon from "@mui/icons-material/AppRegistration"
 import LogoutIcon from "@mui/icons-material/Logout"
+import { useAppSelector } from "../../redux/hooks"
+import { selectRole } from "../../../features/user/userSlice"
 
 export const navbarItems: ButtonItemProps[] = [
-  {
-    title: "Job Posting",
-    Icon: AppRegistrationIcon,
-    href: "/job-posting/create",
-  },
+  // {
+  //   title: "Job Posting",
+  //   Icon: AppRegistrationIcon,
+  //   href: "/job-posting/create",
+  // },
   {
     title: "Events",
     Icon: EventIcon,
@@ -33,9 +35,17 @@ export const navbarItems: ButtonItemProps[] = [
 ]
 
 const Navbar = () => {
+  const role = useAppSelector(selectRole)
   return (
     <div className="flex space-x-6 pt-4 justify-end mr-16">
       <div className="w-fit border-bg-primary border-2 rounded-2xl p-2 flex flex-row space-x-2">
+        {role === "ALUMNI" && (
+          <NavButton
+            Icon={AppRegistrationIcon}
+            title="Job Posting"
+            href="/job-posting/create"
+          />
+        )}
         {navbarItems.map(item => (
           <NavButton
             Icon={item.Icon}

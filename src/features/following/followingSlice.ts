@@ -120,6 +120,14 @@ export const followingSlice = createAppSlice({
         },
       },
     ),
+    addFollow: create.reducer<{ follow: Follower }>((state, action) => {
+      state.following = [...state.following, action.payload.follow]
+    }),
+    removeFollow: create.reducer<{ id: number }>((state, action) => {
+      state.following = state.following.filter(
+        it => it.id !== action.payload.id,
+      )
+    }),
   }),
   selectors: {
     selectFollowingList: following => following.following,
@@ -133,4 +141,6 @@ export const {
   getInitialFollowing,
   getCompleteFollowing,
   getRemainingFollowing,
+  addFollow,
+  removeFollow,
 } = followingSlice.actions

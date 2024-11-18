@@ -12,7 +12,7 @@ import { Link } from "react-router-dom"
 const PostingItem = ({ posting }: { posting: Posting }) => {
   return (
     <Link to={`/job-posting/${posting.id}`}>
-      <div className="w-[95%] h-fit flex flex-col items-start justify-between space-y-2 cursor-pointer bg-content-dark shadow-custom px-4 py-3 mr-8 rounded-md border-2 border-white/80">
+      <div className="w-[95%] h-fit flex flex-col items-start justify-between space-y-2 cursor-pointer bg-content-dark shadow-custom px-4 py-3 mr-8 rounded-md border-2 border-white/80 my-4">
         <div className="text-white text-2xl font-bold">
           {posting.company || "Carwale"}
           <Divider sx={{ borderColor: "white", opacity: "50%" }} />

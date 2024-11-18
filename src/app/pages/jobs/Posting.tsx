@@ -87,12 +87,12 @@ const Posting = () => {
                 </div>
               </div>
               <div className="flex justify-end w-full pr-2">
-                <Link to={posting.link}>
+                <a href={posting.link} target="_blank">
                   <div className="mr-4 text-white py-2 bg-content-dark px-4 flex flex-row items-center justify-center space-x-1 border-2 border-white rounded-full transition-all shadow-default hover:-translate-x-0.5 hover:-translate-y-0.5 duration-300 ease-in-out">
                     <div>Apply</div>
                     <SvgIcon component={SendIcon} />
                   </div>
-                </Link>
+                </a>
               </div>
             </div>
           )}

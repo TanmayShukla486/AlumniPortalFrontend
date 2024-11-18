@@ -19,11 +19,15 @@ import AdminJobPosting from "./app/pages/admin/posting/AdminJobPosting"
 import SinglePosting from "./app/pages/admin/posting/SinglePosting"
 import Postings from "./app/pages/jobs/Postings"
 import Posting from "./app/pages/jobs/Posting"
+import Events from "./app/pages/event/Events"
+import ErrorPage from "./app/pages/error/ErrorPage"
+import AdminCategory from "./app/pages/admin/category/AdminCategory"
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Navigate to="/register" />,
+    errorElement: <ErrorPage />,
   },
   {
     path: "/job-posting/create",
@@ -66,10 +70,6 @@ const router = createBrowserRouter([
     element: <Contact />,
   },
   {
-    path: "/events",
-    element: <div>Events</div>,
-  },
-  {
     path: "/feed/search",
     element: <SearchPage />,
   },
@@ -98,12 +98,20 @@ const router = createBrowserRouter([
     element: <SinglePosting />,
   },
   {
+    path: "admin/category",
+    element: <AdminCategory />,
+  },
+  {
     path: "job-posting/all",
     element: <Postings />,
   },
   {
     path: "job-posting/:id",
     element: <Posting />,
+  },
+  {
+    path: "events",
+    element: <Events />,
   },
   {
     path: "alumni",

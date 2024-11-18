@@ -4,18 +4,25 @@ import {
   CircularProgress,
   Divider,
   IconButton,
+  Snackbar,
   SvgIcon,
   TextField,
 } from "@mui/material"
 import React, { useEffect, useState } from "react"
 import CustomInput from "../../register/components/input-field"
+import CloseIcon from "@mui/icons-material/Close"
+
 import {
   addComment,
   Comment,
   CommentSendBody,
+  dislikeComment,
   fetchComments,
+  likeComment,
   selectCommentList,
   selectCommentListStatus,
+  selectLikeCommentStatus,
+  selectSingleCommentStatus,
 } from "../../../../features/blogs/commentSlice"
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks"
 import {
@@ -27,14 +34,37 @@ import CustomButton from "../../../components/reusable/custom-button"
 import UserTag from "../../../components/reusable/user-taglink"
 import ThumbUpIcon from "@mui/icons-material/ThumbUp"
 import OutlinedFlagIcon from "@mui/icons-material/OutlinedFlag"
+import { ConfigType } from "../../../../features/profile/profileSlice"
+import { Navigate } from "react-router-dom"
 
 interface CommentItemProps {
   comment: Comment
 }
 
 const CommentItem = ({ comment }: CommentItemProps) => {
+  const username = useAppSelector(selectUsername) || ""
+  const token =
+    useAppSelector(selectToken) || localStorage.getItem("token") || ""
+  const refreshToken = useAppSelector(selectRefreshToken) || ""
+  const commentLikeStatus = useAppSelector(selectLikeCommentStatus)
+  const dispatch = useAppDispatch()
+  const handleCommentLike = () => {
+    console.log(comment.likes)
+    console.log(comment)
+    const like = comment.likes.find(it => it.username === username)
+    console.log(like)
+    if (like) dispatch(dislikeComment({ token, refreshToken, id: like.id }))
+    else dispatch(likeComment({ token, refreshToken, id: comment.id }))
+  }
   return (
     <div className="w-full text-white">
+      {commentLikeStatus === "ERROR" && (
+        <Snackbar
+          open
+          autoHideDuration={2000}
+          message="Like operation failed"
+        />
+      )}
       <div className="w-full flex flex-row justify-between">
         <div className="w-24">
           <UserTag username={comment.username} />
@@ -51,9 +81,12 @@ const CommentItem = ({ comment }: CommentItemProps) => {
       </div>
       <div className="mt-2 text-md">{comment.content}</div>
       <div className="w-full flex flex-row space-x-4 mt-4">
-        <div className="text-white  flex flex-row space-x-1 items-center justify-center cursor-pointer">
+        <div
+          className="text-white  flex flex-row space-x-1 items-center justify-center cursor-pointer"
+          onClick={handleCommentLike}
+        >
           <SvgIcon component={ThumbUpIcon} fontSize="small" />
-          <div>{comment.likes}</div>
+          <div>{comment.likes.length}</div>
         </div>
       </div>
       <Divider
@@ -79,7 +112,24 @@ const CommentBox = ({ blogId }: CommentBoxProps) => {
   const dispatch = useAppDispatch()
   const username = useAppSelector(selectUsername) || ""
   const [text, setText] = useState<string>("")
+  const [redirect, setRedirect] = useState<boolean>(false)
   const listStatus = useAppSelector(selectCommentListStatus)
+  const singleCommentStatus = useAppSelector(selectSingleCommentStatus)
+  const commentListStatus = useAppSelector(selectCommentListStatus)
+  const handleClose = () => setRedirect(true)
+  const action = (
+    <React.Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  )
+
   useEffect(() => {
     dispatch(fetchComments({ id: blogId, token, refreshToken }))
   }, [])
@@ -97,10 +147,21 @@ const CommentBox = ({ blogId }: CommentBoxProps) => {
         refreshToken,
       }),
     )
+    setText("")
   }
   /**TODO: */
   return (
     <div className="flex w-full flex-col justify-start items-start">
+      {(singleCommentStatus === "ERROR" || commentListStatus === "ERROR") && (
+        <Snackbar
+          open
+          autoHideDuration={3000}
+          onClose={handleClose}
+          message="Error while interacting with blog"
+          action={action}
+        />
+      )}
+      {redirect && <Navigate to={"/feed"} />}
       <div className="font-bold bg-transparent text-3xl">
         <div className=" bg-clip-text text-content-dark mt-2">Comments</div>
         <Divider
@@ -159,9 +220,11 @@ const CommentBox = ({ blogId }: CommentBoxProps) => {
         )}
         {listStatus === "IDLE" &&
           comments.length > 0 &&
-          comments.map(comment => (
-            <CommentItem comment={comment} key={comment.id} />
-          ))}
+          comments
+            // .sort((a, b) => a.likes.length - b.likes.length)
+            .map((comment, index) => (
+              <CommentItem comment={comment} key={index} />
+            ))}
         {listStatus === "IDLE" && comments.length === 0 && (
           <div>No comments</div>
         )}

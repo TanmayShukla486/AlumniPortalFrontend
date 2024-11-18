@@ -9,6 +9,7 @@ import CreateIcon from "@mui/icons-material/Create"
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings"
 import { Divider, Skeleton } from "@mui/material"
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"
+import CategoryIcon from "@mui/icons-material/Category"
 import {
   selectFollowingList,
   selectFollowingListStatus,
@@ -36,6 +37,11 @@ const sidebarItems: ButtonItemProps[] = [
     title: "Events",
     Icon: EditCalendarIcon,
     href: "/admin/events",
+  },
+  {
+    title: "Categories",
+    Icon: CategoryIcon,
+    href: "/admin/category",
   },
   {
     title: "Blogs",
