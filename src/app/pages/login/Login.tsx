@@ -1,4 +1,12 @@
-import { Button, Card, IconButton, SvgIcon, TextField } from "@mui/material"
+import {
+  Alert,
+  Button,
+  Card,
+  IconButton,
+  Snackbar,
+  SvgIcon,
+  TextField,
+} from "@mui/material"
 import React, { useEffect, useRef, useState } from "react"
 import CustomInput from "../register/components/input-field"
 import VisibilityIcon from "@mui/icons-material/Visibility"
@@ -40,6 +48,17 @@ const Login = () => {
   return (
     <div className="h-full w-full flex items-center justify-center">
       <LoadingModal openExp={status === "LOADING"} />
+      {status === "ERROR" && (
+        <div>
+          <Snackbar
+            open
+            autoHideDuration={1500}
+            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          >
+            <Alert severity="error">Invalid Credentials</Alert>
+          </Snackbar>
+        </div>
+      )}
       {status === "LOGGEDIN" && <Navigate to={"/home"} />}
       <div className="lg:w-1/3 md:w-1/2">
         <Card

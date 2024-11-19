@@ -457,7 +457,7 @@ const JobPosting = () => {
                 </div>
               </div>
 
-              <div className="h-1/3">
+              <div className="h-1/3 ">
                 <div className="text-content-dark">Rejected</div>
                 <Divider
                   sx={{
@@ -467,7 +467,7 @@ const JobPosting = () => {
                     marginBottom: "4px",
                   }}
                 />
-                <div className="overflow-y-scroll hide-scrollbar space-y-2">
+                <div className="overflow-y-scroll hide-scrollbar space-y-2 h-[60%]">
                   {postings?.filter(it => it.status === "REJECTED").length >
                     0 &&
                     postings
