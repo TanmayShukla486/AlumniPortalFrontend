@@ -21,7 +21,7 @@ const peopleDetails: Details[] = [
     linkedin: "https://www.linkedin.com/in/tanmay-shukla-a76764226",
   },
   {
-    image: "",
+    image: "/umang.jpeg",
     name: "Umang Gupta",
     department: "Computer Engineering",
     batch: "2025 Batch",

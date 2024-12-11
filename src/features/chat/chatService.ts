@@ -94,7 +94,7 @@ export class ChatService {
   ): Promise<ChatMessage[]> {
     try {
       const response = await fetch(
-        `http://localhost:8080/api/chat/history?sender=${sender}&recipient=${recipient}`,
+        `/api/chat/history?sender=${sender}&recipient=${recipient}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

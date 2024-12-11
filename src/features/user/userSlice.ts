@@ -43,6 +43,7 @@ export const userSlice = createAppSlice({
     logout: create.reducer(state => {
       state.credentials = null
       localStorage.removeItem("token")
+      state.status = "LOGGEDOUT"
     }),
     login: create.asyncThunk<CredentialWrapper, LoginDetails>(
       async data => {

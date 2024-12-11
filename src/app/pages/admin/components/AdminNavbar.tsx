@@ -8,6 +8,8 @@ import SvgIcon from "@mui/icons-material/AppRegistration"
 import LogoutIcon from "@mui/icons-material/Logout"
 import NavButton from "../../../components/reusable/navbutton"
 import { ButtonItemProps } from "../../../components/reusable/siderbar-item"
+import { useAppDispatch } from "../../../redux/hooks"
+import { logout } from "../../../../features/user/userSlice"
 
 export const navbarItems: ButtonItemProps[] = [
   {
@@ -28,6 +30,10 @@ export const navbarItems: ButtonItemProps[] = [
 ]
 
 const AdminNavbar = () => {
+  const dispatch = useAppDispatch()
+  const logoutUser = () => {
+    dispatch(logout())
+  }
   return (
     <div className="flex space-x-6 pt-4 justify-end mr-16">
       <div className="w-fit border-bg-primary border-2 rounded-2xl p-2 flex flex-row space-x-2">
@@ -45,6 +51,7 @@ const AdminNavbar = () => {
           component={LogoutIcon}
           fontSize="large"
           sx={{ marginLeft: "8px" }}
+          onClick={logoutUser}
         />
       </div>
     </div>

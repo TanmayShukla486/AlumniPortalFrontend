@@ -300,7 +300,7 @@ const UserPage = () => {
   }
   const fetchComments = async () => {
     const response = await axios.get(
-      `http://localhost:8080/api/comment/username/${username}`,
+      `/api/comment/username/${username}`,
       config,
     )
     setComments(response.data)

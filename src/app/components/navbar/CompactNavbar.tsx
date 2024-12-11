@@ -24,30 +24,17 @@ const CompactNavbar = () => {
   const dispatch = useAppDispatch()
   const [isOpenCategory, setIsOpenCategory] = useState<boolean>(false)
   const handleEnterPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && !redirect) setRedirect(true)
+    setRedirect(e.key === "Enter" && !redirect)
   }
-  const [logut, setLogout] = useState<boolean>(false)
-  const [open, setOpen] = useState<boolean>(false)
   const location = useLocation()
+  if (redirect)
+    return (
+      <Navigate
+        to={`/feed/search?${searchParam.toLowerCase()}=${search}${categoryParam !== "" ? `&category=${categoryParam}` : ""}`}
+      />
+    )
   return (
     <div className="w-[84.5vw] h-12 border-b-2 border-white -ml-[18px] bg-gradient-to-tr from-bg-dark to-bg-light flex flex-row justify-start items-center px-4">
-      {redirect && (
-        <Navigate
-          to={`/feed/search?${searchParam.toLowerCase()}=${search}${categoryParam !== "" ? `&category=${categoryParam}` : ""}`}
-        />
-      )}
-      {open && (
-        <div>
-          <Snackbar
-            open
-            autoHideDuration={1500}
-            onClose={() => setLogout(true)}
-          >
-            <Alert severity="success">Logout Successful</Alert>
-          </Snackbar>
-        </div>
-      )}
-      {logut && <Navigate to="/login" />}
       {location.pathname.match("/feed") && (
         <div className="flex flex-row justify-between items-center w-full">
           <div className="flex flex-row items-center justify-start space-x-4">
@@ -65,7 +52,7 @@ const CompactNavbar = () => {
                 component={SearchIcon}
                 className="absolute z-10 text-white justify-end mr-2"
                 onClick={() => {
-                  if (!redirect) setRedirect(true)
+                  setRedirect(state => state != true)
                 }}
               />
             </div>
@@ -159,7 +146,6 @@ const CompactNavbar = () => {
             className="text-white hover:bg-content-light hover:border-2 cursor-pointer border-white transition-colors duration-300 ease-in-out px-4 py-1 rounded-full"
             onClick={() => {
               dispatch(logout())
-              setOpen(true)
             }}
           >
             Logout
