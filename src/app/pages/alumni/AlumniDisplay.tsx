@@ -48,10 +48,7 @@ const AlumniDisplay = () => {
   const fetchAlumni = async () => {
     try {
       setAlumniStatus("LOADING")
-      const response = await axios.get(
-        "http://localhost:8080/api/alumni",
-        config,
-      )
+      const response = await axios.get("/api/alumni", config)
       setAlumniStatus("IDLE")
       setAlumniList(response.data)
       setAlumniList(list => list.filter(it => it.username !== username))
@@ -74,11 +71,10 @@ const AlumniDisplay = () => {
   }, [])
 
   const createQuery = () => {
-    if (!search && !year) return "http://localhost:8080/api/alumni"
-    if (search && year)
-      return `http://localhost:8080/api/alumni?name=${search}&year=${year}`
-    else if (year) return `http://localhost:8080/api/alumni?year=${year}`
-    return `http://localhost:8080/api/alumni?name=${search}`
+    if (!search && !year) return "/api/alumni"
+    if (search && year) return `/api/alumni?name=${search}&year=${year}`
+    else if (year) return `/api/alumni?year=${year}`
+    return `/api/alumni?name=${search}`
   }
 
   useEffect(() => {

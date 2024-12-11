@@ -37,10 +37,7 @@ export const eventSlice = createAppSlice({
             RefreshToken: "",
           },
         }
-        const response = await axios.get(
-          "http://localhost:8080/admin/events",
-          config,
-        )
+        const response = await axios.get("/admin/events", config)
         return response.data
       },
       {
@@ -67,7 +64,7 @@ export const eventSlice = createAppSlice({
           },
         }
         const response = await axios.post(
-          "http://localhost:8080/admin/events",
+          "/admin/events",
           JSON.stringify(data),
           config,
         )
@@ -95,10 +92,7 @@ export const eventSlice = createAppSlice({
             RefreshToken: "",
           },
         }
-        const response = await axios.delete(
-          `http://localhost:8080/admin/events/${id}`,
-          config,
-        )
+        const response = await axios.delete(`/admin/events/${id}`, config)
         return response.data
       },
       {

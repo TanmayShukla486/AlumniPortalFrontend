@@ -2,19 +2,35 @@ import React, { useEffect, useState } from "react"
 import Wrapper from "../../components/wrapper/Wrapper"
 import EventBox from "../home/components/Event"
 import { Posting } from "./JobPosting"
-import { CircularProgress, Divider } from "@mui/material"
+import {
+  Alert,
+  CircularProgress,
+  Divider,
+  IconButton,
+  Snackbar,
+  SvgIcon,
+} from "@mui/material"
 import { ConfigType } from "../../../features/profile/profileSlice"
 import { useAppSelector } from "../../redux/hooks"
-import { selectToken } from "../../../features/user/userSlice"
+import { selectRole, selectToken } from "../../../features/user/userSlice"
 import axios from "axios"
+import DeleteIcon from "@mui/icons-material/Delete"
 import { Link } from "react-router-dom"
 
-const PostingItem = ({ posting }: { posting: Posting }) => {
+const PostingItem = ({
+  posting,
+  handleDelete,
+}: {
+  posting: Posting
+  handleDelete: (id: number) => void
+}) => {
   return (
     <Link to={`/job-posting/${posting.id}`}>
       <div className="w-[95%] h-fit flex flex-col items-start justify-between space-y-2 cursor-pointer bg-content-dark shadow-custom px-4 py-3 mr-8 rounded-md border-2 border-white/80 my-4">
-        <div className="text-white text-2xl font-bold">
-          {posting.company || "Carwale"}
+        <div className="text-white text-2xl font-bold w-full">
+          <div className="flex flex-row justify-between">
+            <div>{posting.company || "Carwale"}</div>
+          </div>
           <Divider sx={{ borderColor: "white", opacity: "50%" }} />
         </div>
         <div className="text-white text-lg">{posting.title}</div>
@@ -44,10 +60,7 @@ const Postings = () => {
   const fetchPostings = async () => {
     setListStatus("LOADING")
     try {
-      const response = await axios.get(
-        "http://localhost:8080/api/postings?status=APPROVED",
-        config,
-      )
+      const response = await axios.get("/api/postings?status=APPROVED", config)
       setList(response.data)
       setListStatus("IDLE")
     } catch (error) {
@@ -58,7 +71,17 @@ const Postings = () => {
   useEffect(() => {
     fetchPostings()
   }, [])
-
+  const handleDelete = async (id: number) => {
+    setListStatus("LOADING")
+    try {
+      const response = await axios.delete(`/api/posting/${id}`, config)
+      setList(state => state.filter(it => it.id !== id))
+      setListStatus("IDLE")
+    } catch (error) {
+      console.log(error)
+      setListStatus("IDLE")
+    }
+  }
   return (
     <Wrapper>
       <div className="grid grid-cols-10 h-[83.5vh] mt-4 mr-6">
@@ -88,7 +111,11 @@ const Postings = () => {
           {listStatus === "IDLE" && list.length > 0 && (
             <div>
               {list.map(posting => (
-                <PostingItem posting={posting} key={posting.id} />
+                <PostingItem
+                  posting={posting}
+                  key={posting.id}
+                  handleDelete={handleDelete}
+                />
               ))}
             </div>
           )}

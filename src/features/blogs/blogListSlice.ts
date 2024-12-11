@@ -40,10 +40,7 @@ export const blogListSlice = createAppSlice({
             Accept: "application/json",
           },
         }
-        const response = await axios.get(
-          `http://localhost:8080/api/blog`,
-          config,
-        )
+        const response = await axios.get(`/api/blog`, config)
         return response.data
       },
       {
@@ -74,7 +71,7 @@ export const blogListSlice = createAppSlice({
           },
         }
         const response = await axios.get(
-          `http://localhost:8080/api/blog?category=${category}`,
+          `/api/blog?category=${category}`,
           config,
         )
         return response.data
@@ -103,10 +100,7 @@ export const blogListSlice = createAppSlice({
             RefreshToken: "",
           },
         }
-        const response = await axios.get(
-          `http://localhost:8080/api/blog/popular`,
-          config,
-        )
+        const response = await axios.get(`/api/blog/popular`, config)
         return response.data
       },
       {

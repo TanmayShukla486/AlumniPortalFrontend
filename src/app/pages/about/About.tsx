@@ -23,10 +23,10 @@ const details: Details[] = [
     bio: "I am a passionate and dedicated software developer with a strong interest in backend development. Currently pursuing my Bachelor's degree and set to graduate in May 2025, I enjoy building scalable and efficient systems that solve real-world problems.",
   },
   {
-    image: "/sanjog.JPG",
+    image: "/umang.jpeg",
     name: "Umang Gupta",
     department: "Computer Engineering",
-    bio: "I am a passionate and dedicated software developer with a strong interest in backend development. Currently pursuing my Bachelor's degree and set to graduate in May 2025, I enjoy building scalable and efficient systems that solve real-world problems.",
+    bio: "I am a final-year Computer Science Engineering student at IET DAVV. With expertise in Java, React.js, and database management, I have built projects like Travel and contribute in this alumni networking platform. My interests span competitive coding, swimming, and music. I’m passionate about solving real-world problems through technology.",
   },
 ]
 
@@ -61,8 +61,8 @@ const About = () => {
     <Wrapper>
       <div className="w-full h-[84.5vh] px-8 py-6">
         <div className="bg-gradient-to-b from-content-light/60 to-white h-full w-full border-2 border-content-dark rounded-md grid grid-rows-9 gap-y-4 p-4">
-          {details.map(item => (
-            <AboutElement detail={item} />
+          {details.map((item, index) => (
+            <AboutElement detail={item} key={index} />
           ))}
         </div>
       </div>

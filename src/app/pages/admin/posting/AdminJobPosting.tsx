@@ -40,10 +40,7 @@ const AdminJobPosting = () => {
   }
   useEffect(() => {
     const fetchList = async () => {
-      const response = await axios.get(
-        "http://localhost:8080/api/postings",
-        config,
-      )
+      const response = await axios.get("/api/postings", config)
       setPostingList(response.data)
     }
     fetchList()

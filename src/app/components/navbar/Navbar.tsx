@@ -33,12 +33,12 @@ export const navbarItems: ButtonItemProps[] = [
     href: "/about",
   },
 ]
-const dispatch = useAppDispatch()
-const logoutUser = () => {
-  dispatch(logout())
-}
 
 const Navbar = () => {
+  const dispatch = useAppDispatch()
+  const logoutUser = () => {
+    dispatch(logout())
+  }
   const role = useAppSelector(selectRole)
   return (
     <div className="flex space-x-6 pt-4 justify-end mr-16">

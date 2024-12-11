@@ -275,11 +275,7 @@ const UserPage = () => {
   }
   const followUser = async () => {
     try {
-      const response = await axios.post(
-        `http://localhost:8080/api/${username}/follow`,
-        "",
-        config,
-      )
+      const response = await axios.post(`/api/${username}/follow`, "", config)
       dispatch(addFollow({ follow: response.data }))
       dispatch(addProfileFollows({ follow: response.data }))
     } catch (error) {
@@ -288,10 +284,7 @@ const UserPage = () => {
   }
   const unFollowUser = async () => {
     try {
-      const response = await axios.delete(
-        `http://localhost:8080/api/${username}/unfollow`,
-        config,
-      )
+      const response = await axios.delete(`/api/${username}/unfollow`, config)
       dispatch(removeFollow({ id: response.data }))
       dispatch(removeProfileFollows({ id: response.data }))
     } catch (error) {
@@ -300,16 +293,13 @@ const UserPage = () => {
   }
   const fetchComments = async () => {
     const response = await axios.get(
-      `http://localhost:8080/api/comment/username/${username}`,
+      `/api/comment/username/${username}`,
       config,
     )
     setComments(response.data)
   }
   const fetchBlogs = async () => {
-    const response = await axios.get(
-      `http://localhost:8080/api/blog?author=${username}`,
-      config,
-    )
+    const response = await axios.get(`/api/blog?author=${username}`, config)
     setBlogs(response.data.data)
   }
   useEffect(() => {

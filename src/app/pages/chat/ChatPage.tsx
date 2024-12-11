@@ -40,7 +40,7 @@ const SearchUser = ({
       },
     }
     const response = await axios.get(
-      `http://localhost:8080/api/chat/users?username=${search}`,
+      `/api/chat/users?username=${search}`,
       config,
     )
     setUsers(response.data)
@@ -123,10 +123,7 @@ const ChatPage = () => {
           RefreshToken: "",
         },
       }
-      const response = await axios.get(
-        "http://localhost:8080/api/chat/rooms",
-        config,
-      )
+      const response = await axios.get("/api/chat/rooms", config)
       setRecentChats(response.data)
     }
     fetchChatRooms()
