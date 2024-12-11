@@ -8,8 +8,8 @@ import PeopleAltIcon from "@mui/icons-material/PeopleAlt"
 import AnnouncementIcon from "@mui/icons-material/Announcement"
 import SvgIcon from "@mui/icons-material/AppRegistration"
 import LogoutIcon from "@mui/icons-material/Logout"
-import { useAppSelector } from "../../redux/hooks"
-import { selectRole } from "../../../features/user/userSlice"
+import { useAppDispatch, useAppSelector } from "../../redux/hooks"
+import { logout, selectRole } from "../../../features/user/userSlice"
 
 export const navbarItems: ButtonItemProps[] = [
   // {
@@ -33,6 +33,10 @@ export const navbarItems: ButtonItemProps[] = [
     href: "/about",
   },
 ]
+const dispatch = useAppDispatch()
+const logoutUser = () => {
+  dispatch(logout())
+}
 
 const Navbar = () => {
   const role = useAppSelector(selectRole)
@@ -60,6 +64,7 @@ const Navbar = () => {
           component={LogoutIcon}
           fontSize="large"
           sx={{ marginLeft: "8px" }}
+          onClick={logoutUser}
         />
       </div>
     </div>

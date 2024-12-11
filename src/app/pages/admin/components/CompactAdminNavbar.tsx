@@ -24,11 +24,11 @@ const CompactAdminNavbar = () => {
   return (
     <div className="w-[84.5vw] h-12 border-b-2 border-white -ml-[18px] bg-gradient-to-tr from-bg-dark to-bg-light flex justify-end flex-row items-center space-x-4 px-4">
       {viewFlaggedContent && <Navigate to="/admin/flagged" />}
-      <div className="text-white hover:bg-content-light px-4 rounded-full hover:text-content-dark transition-colors duration-300 ease-in cursor-pointer">
+      {/* <div className="text-white hover:bg-content-light px-4 rounded-full hover:text-content-dark transition-colors duration-300 ease-in cursor-pointer">
         <button onClick={() => setViewFlaggedContent(true)}>
           Flagged Content
         </button>
-      </div>
+      </div> */}
       <div className="text-white hover:bg-content-light px-4 rounded-full hover:text-content-dark transition-colors duration-300 ease-in cursor-pointer">
         <button onClick={handleLogout}>Logout</button>
       </div>
