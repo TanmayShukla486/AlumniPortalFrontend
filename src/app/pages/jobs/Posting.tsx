@@ -28,11 +28,17 @@ const Posting = () => {
     },
   }
   const fetchPosting = async () => {
-    const response = await axios.get(`/api/posting/${id}`, config)
+    const response = await axios.get(
+      `http://localhost:8080/api/posting/${id}`,
+      config,
+    )
     setPosting(response.data)
   }
   const handleDelete = async () => {
-    const response = await axios.delete(`/api/posting/${id}`, config)
+    const response = await axios.delete(
+      `http://localhost:8080/api/posting/${id}`,
+      config,
+    )
     setOpen(true)
   }
   useEffect(() => {

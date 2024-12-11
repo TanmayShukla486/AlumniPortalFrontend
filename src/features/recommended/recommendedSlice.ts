@@ -40,7 +40,10 @@ export const recommendedSlice = createAppSlice({
             Accept: "application/json",
           },
         }
-        const response = await axios.get("/api/user/recommended", config)
+        const response = await axios.get(
+          "http://localhost:8080/api/user/recommended",
+          config,
+        )
         return response.data
       },
       {

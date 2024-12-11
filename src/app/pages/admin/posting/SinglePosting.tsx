@@ -24,11 +24,17 @@ const SinglePosting = () => {
     },
   }
   const fetchPosting = async () => {
-    const response = await axios.get(`/api/posting/${id}`, config)
+    const response = await axios.get(
+      `http://localhost:8080/api/posting/${id}`,
+      config,
+    )
     setPosting(response.data)
   }
   const fetchList = async () => {
-    const response = await axios.get("/api/postings", config)
+    const response = await axios.get(
+      "http://localhost:8080/api/postings",
+      config,
+    )
     setPostingList(response.data)
   }
   const [posting, setPosting] = useState<Posting>()
@@ -40,7 +46,7 @@ const SinglePosting = () => {
   }, [])
   const handleEvent = async (val: string) => {
     const response = await axios.put(
-      `/api/posting/${posting?.id}/${val}`,
+      `http://localhost:8080/api/posting/${posting?.id}/${val}`,
       "",
       config,
     )

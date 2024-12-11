@@ -57,7 +57,11 @@ const BlogBody = ({ id }: { id: string }) => {
         id: 0,
         username: username || "",
       }
-      const response = await axios.post(`/api/likes/blog/${id}`, "", config)
+      const response = await axios.post(
+        `http://localhost:8080/api/likes/blog/${id}`,
+        "",
+        config,
+      )
       setBlogLikes(state => [...state, response.data])
     } catch (error) {
       console.log(error)
@@ -66,7 +70,7 @@ const BlogBody = ({ id }: { id: string }) => {
   const removeBlogLike = async (id: number) => {
     try {
       const response = await axios.delete(
-        `/api/likes?id=${id}&type=BLOG`,
+        `http://localhost:8080/api/likes?id=${id}&type=BLOG`,
         config,
       )
       setBlogLikes(state => state.filter(it => it.id !== response.data.id))
@@ -95,7 +99,10 @@ const BlogBody = ({ id }: { id: string }) => {
     )
     const fetchBlogLikes = async () => {
       try {
-        const response = await axios.get(`/api/likes/blog?id=${id}`, config)
+        const response = await axios.get(
+          `http://localhost:8080/api/likes/blog?id=${id}`,
+          config,
+        )
         setBlogLikes(response.data)
       } catch (error) {
         console.log(error)

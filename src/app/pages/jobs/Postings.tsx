@@ -60,7 +60,10 @@ const Postings = () => {
   const fetchPostings = async () => {
     setListStatus("LOADING")
     try {
-      const response = await axios.get("/api/postings?status=APPROVED", config)
+      const response = await axios.get(
+        "http://localhost:8080/api/postings?status=APPROVED",
+        config,
+      )
       setList(response.data)
       setListStatus("IDLE")
     } catch (error) {
@@ -74,7 +77,10 @@ const Postings = () => {
   const handleDelete = async (id: number) => {
     setListStatus("LOADING")
     try {
-      const response = await axios.delete(`/api/posting/${id}`, config)
+      const response = await axios.delete(
+        `http://localhost:8080/api/posting/${id}`,
+        config,
+      )
       setList(state => state.filter(it => it.id !== id))
       setListStatus("IDLE")
     } catch (error) {

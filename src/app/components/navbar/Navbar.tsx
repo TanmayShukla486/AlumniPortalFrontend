@@ -33,7 +33,7 @@ export const navbarItems: ButtonItemProps[] = [
     href: "/about",
   },
 ]
-
+// http://localhost:8080/
 const Navbar = () => {
   const dispatch = useAppDispatch()
   const logoutUser = () => {

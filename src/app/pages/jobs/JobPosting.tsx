@@ -79,7 +79,7 @@ const JobPosting = () => {
     try {
       setPostingStatus("LOADING")
       const response = await axios.get(
-        `/api/posting/username/${username}`,
+        `http://localhost:8080/api/posting/username/${username}`,
         config,
       )
       setPostings(response.data)
@@ -109,7 +109,7 @@ const JobPosting = () => {
     try {
       setStatus("LOADING")
       const response = await axios.post(
-        "/api/postings",
+        "http://localhost:8080/api/postings",
         JSON.stringify(posting),
         config,
       )

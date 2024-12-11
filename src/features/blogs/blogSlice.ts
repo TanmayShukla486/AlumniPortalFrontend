@@ -77,7 +77,10 @@ export const blogSlice = createAppSlice({
             Accept: "application/json",
           },
         }
-        const response = await axios.get(`/api/blog/${id}`, config)
+        const response = await axios.get(
+          `http://localhost:8080/api/blog/${id}`,
+          config,
+        )
         return response.data
       },
       {
@@ -106,7 +109,7 @@ export const blogSlice = createAppSlice({
           },
         }
         const response = await axios.post(
-          "/api/blog",
+          "http://localhost:8080/api/blog",
           JSON.stringify(data.blog),
           config,
         )
@@ -139,7 +142,7 @@ export const blogSlice = createAppSlice({
           },
         }
         const response = await axios.post(
-          "/api/likes",
+          "http://localhost:8080/api/likes",
           JSON.stringify({
             entity: "blog",
             entityId: id,
@@ -172,7 +175,10 @@ export const blogSlice = createAppSlice({
             Accept: "application/json",
           },
         }
-        const response = await axios.delete(`/api/blog/${id}`, config)
+        const response = await axios.delete(
+          `http://localhost:8080/api/blog/${id}`,
+          config,
+        )
         return { id }
       },
       {

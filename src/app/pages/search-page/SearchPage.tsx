@@ -54,7 +54,10 @@ const SearchPage = () => {
     }
     try {
       const query = createQuery()
-      const res = await axios.get(`/api/blog?${query}`, config)
+      const res = await axios.get(
+        `http://localhost:8080/api/blog?${query}`,
+        config,
+      )
       setSearchedList(res.data.data)
       setListStatus("LOADED")
     } catch (error) {

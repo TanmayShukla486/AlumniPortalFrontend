@@ -64,7 +64,10 @@ export const commentSlice = createAppSlice({
             Accept: "application/json",
           },
         }
-        const response = await axios.get(`/api/comment/${id}`, config)
+        const response = await axios.get(
+          `http://localhost:8080/api/comment/${id}`,
+          config,
+        )
         return response.data
       },
       {
@@ -94,7 +97,7 @@ export const commentSlice = createAppSlice({
           },
         }
         const response = await axios.post(
-          `/api/comment`,
+          `http://localhost:8080/api/comment`,
           JSON.stringify(data),
           config,
         )
@@ -127,7 +130,7 @@ export const commentSlice = createAppSlice({
             Accept: "application/json",
           },
         }
-        await axios.delete(`/api/comment?id=${id}`, config)
+        await axios.delete(`http://localhost:8080/api/comment?id=${id}`, config)
         return id
       },
       {
@@ -157,7 +160,7 @@ export const commentSlice = createAppSlice({
           },
         }
         const response = await axios.post(
-          `/api/likes/comment/${id}`,
+          `http://localhost:8080/api/likes/comment/${id}`,
           "",
           config,
         )
@@ -189,7 +192,7 @@ export const commentSlice = createAppSlice({
           },
         }
         const response = await axios.delete(
-          `/api/likes?id=${id}&type=COMMENT`,
+          `http://localhost:8080/api/likes?id=${id}&type=COMMENT`,
           config,
         )
         return response.data

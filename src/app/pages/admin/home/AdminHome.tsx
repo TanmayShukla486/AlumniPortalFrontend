@@ -241,7 +241,10 @@ const AdminHome = () => {
     const fetchStats = async () => {
       try {
         setStatStatus("LOADING")
-        const response = await axios.get("/admin/stats", config)
+        const response = await axios.get(
+          "http://localhost:8080/admin/stats",
+          config,
+        )
         setStatStatus("IDLE")
         setStats(response.data)
       } catch (error) {
@@ -251,7 +254,10 @@ const AdminHome = () => {
     const fetchPeople = async () => {
       try {
         setPeopleStatus("LOADING")
-        const response = await axios.get("/admin/users", config)
+        const response = await axios.get(
+          "http://localhost:8080/admin/users",
+          config,
+        )
         setPeopleStatus("IDLE")
         setPeopleList(response.data)
       } catch (error) {
@@ -261,7 +267,10 @@ const AdminHome = () => {
     const fetchContent = async () => {
       try {
         setContentStatus("LOADING")
-        const response = await axios.get("/admin/content", config)
+        const response = await axios.get(
+          "http://localhost:8080/admin/content",
+          config,
+        )
         setContentStatus("IDLE")
         setContentList(response.data)
       } catch (error) {
@@ -271,7 +280,10 @@ const AdminHome = () => {
     const fetchInfo = async () => {
       try {
         setInfoStatus("LOADING")
-        const response = await axios.get("/admin/important", config)
+        const response = await axios.get(
+          "http://localhost:8080/admin/important",
+          config,
+        )
         setInfoStatus("IDLE")
         setInfoList(response.data)
       } catch (error) {

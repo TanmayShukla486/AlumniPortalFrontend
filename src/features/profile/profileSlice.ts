@@ -76,7 +76,10 @@ export const profileSlice = createAppSlice({
             Accept: "application/json",
           },
         }
-        const response = await axios.get(`/api/user/${username}`, config)
+        const response = await axios.get(
+          `http://localhost:8080/api/user/${username}`,
+          config,
+        )
         return response.data
       },
       {

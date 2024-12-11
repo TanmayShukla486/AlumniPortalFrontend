@@ -97,7 +97,7 @@ const Register = () => {
     }
     try {
       const response = await axios.post(
-        "/api/register",
+        "http://localhost:8080/api/register",
         JSON.stringify(formData),
         {
           headers: {

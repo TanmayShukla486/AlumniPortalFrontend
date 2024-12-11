@@ -40,7 +40,7 @@ export const followingSlice = createAppSlice({
           },
         }
         const resposne = await axios.get(
-          `/api/${username}/following?page=1`,
+          `http://localhost:8080/api/${username}/following?page=1`,
           config,
         )
         return resposne.data
@@ -71,7 +71,10 @@ export const followingSlice = createAppSlice({
             Accept: "application/json",
           },
         }
-        const resposne = await axios.get(`/api/${username}/following`, config)
+        const resposne = await axios.get(
+          `http://localhost:8080/api/${username}/following`,
+          config,
+        )
         return resposne.data
       },
       {
@@ -102,7 +105,7 @@ export const followingSlice = createAppSlice({
           },
         }
         const response = await axios.get(
-          `/api/${username}/following?skip=1`,
+          `http://localhost:8080/api/${username}/following?skip=1`,
           config,
         )
         return response.data

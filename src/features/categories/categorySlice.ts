@@ -46,7 +46,10 @@ export const categorySlice = createAppSlice({
             Accept: "application/json",
           },
         }
-        const response = await axios.get("/api/category", config)
+        const response = await axios.get(
+          "http://localhost:8080/api/category",
+          config,
+        )
         return response.data
       },
       {
@@ -78,7 +81,7 @@ export const categorySlice = createAppSlice({
           },
         }
         const response = await axios.post(
-          "/api/admin/category",
+          "http://localhost:8080/api/admin/category",
           JSON.stringify(category),
           config,
         )
@@ -109,7 +112,7 @@ export const categorySlice = createAppSlice({
           },
         }
         const response = await axios.delete(
-          `/api/admin/category?name=${category}`,
+          `http://localhost:8080/api/admin/category?name=${category}`,
           config,
         )
         return response.data

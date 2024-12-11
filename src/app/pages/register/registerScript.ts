@@ -17,7 +17,7 @@ export interface RegisterForm {
 export const registerUser = async (formData: RegisterForm) => {
   try {
     const response = await axios.post(
-      "/api/user/register",
+      "http://localhost:8080/api/user/register",
       JSON.stringify(formData),
     )
     return response.data

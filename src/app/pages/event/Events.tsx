@@ -68,7 +68,10 @@ const JobBox = () => {
   const fetchPostings = async () => {
     try {
       setListStatus("LOADING")
-      const response = await axios.get("/api/postings?status=APPROVED", config)
+      const response = await axios.get(
+        "http://localhost:8080/api/postings?status=APPROVED",
+        config,
+      )
       setListStatus("IDLE")
       setList(response.data)
     } catch (error) {
